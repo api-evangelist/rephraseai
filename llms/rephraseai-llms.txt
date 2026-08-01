@@ -1,0 +1,31 @@
+# Rephrase.ai
+
+> Rephrase.ai is a Bengaluru-based generative-AI text-to-video platform that turns
+> scripts into videos of digital human avatars (actors) speaking with lip-synced,
+> natural voices. Backed by Techstars, it was acquired by Adobe in November 2023
+> and its technology folded into Adobe's video/AI offerings. The standalone product
+> hosts are decommissioned; the legacy Rephrase Studio API reference remains hosted
+> on ReadMe as the only live public surface. This profile is maintained by API
+> Evangelist for historical/enrichment purposes.
+
+## API
+- [Rephrase Studio API reference](https://studio-rephrase-api.readme.io/reference/documentation): OAuth2 text-to-video generation API — list actors/voices, create/export/get videos.
+
+## Documented operations
+- Get Access Token (POST): OAuth2 refresh_token exchange at https://auth.rephrase.ai/oauth/token (scope all:diy), returns a 24h bearer token.
+- Get Actors (GET): list supported presenter avatars.
+- Get Voices (GET): list supported voices (voice_key).
+- Create Video (POST): submit a script with a chosen actor and voice; returns video_id.
+- Export Video (POST): export a completed video.
+- Get Video (GET): poll status and retrieve the output video URL.
+
+## Artifacts (API Evangelist enrichment)
+- Authentication: authentication/rephraseai-authentication.yml
+- OAuth scopes: scopes/rephraseai-scopes.yml
+- Conventions: conventions/rephraseai-conventions.yml
+- MCP (candidate): mcp/rephraseai-mcp.yml
+- Well-Known probe: well-known/rephraseai-well-known.yml
+
+## Company
+- [Homepage (offline)](https://rephrase.ai/)
+- Acquired by Adobe (Nov 2023); backed by Techstars.

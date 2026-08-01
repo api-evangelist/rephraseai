@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: searched
+source: https://studio-rephrase-api.readme.io/reference/get-access-token
+docs: https://studio-rephrase-api.readme.io/reference/documentation
+note: >-
+  Rephrase.ai was acquired by Adobe in November 2023. The standalone product
+  hosts (rephrase.ai, studio.rephrase.ai, auth.rephrase.ai, api.rephrase.ai) no
+  longer serve TLS and appear decommissioned. This authentication profile is
+  captured from the legacy Rephrase Studio API reference, which is still hosted
+  on ReadMe and remains the only live public surface.
+summary:
+  types: [oauth2]
+  oauth2_flows: [refreshToken]
+  token_type: bearer
+schemes:
+  - name: RephraseStudioOAuth2
+    type: oauth2
+    description: >-
+      OAuth2 token exchange. Clients obtain a client_id and refresh_token by
+      contacting Rephrase support, then exchange them for a short-lived access
+      token. All non-auth API calls require the header
+      `Authorization: Bearer <access_token>`.
+    token_url: https://auth.rephrase.ai/oauth/token
+    grant_type: refresh_token
+    default_scope: all:diy
+    request_body_fields:
+      - name: grant_type
+        default: refresh_token
+      - name: client_id
+        description: Provided by Rephrase support
+      - name: scope
+        default: all:diy
+      - name: refresh_token
+        description: Provided by Rephrase support
+    access_token:
+      header: 'Authorization: Bearer <access_token>'
+      lifetime_hours: 24
+    provisioning: Contact Rephrase support to obtain client_id and refresh_token.
+    sources: [https://studio-rephrase-api.readme.io/reference/get-access-token]

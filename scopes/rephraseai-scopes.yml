@@ -1,0 +1,20 @@
+generated: '2026-07-20'
+method: searched
+source: https://studio-rephrase-api.readme.io/reference/get-access-token
+docs: https://studio-rephrase-api.readme.io/reference/documentation
+note: >-
+  Only one OAuth2 scope is documented in the legacy Rephrase Studio API
+  reference. The provider (acquired by Adobe, Nov 2023) publishes no dedicated
+  scopes/permissions reference page.
+schemes:
+  - name: RephraseStudioOAuth2
+    flow: refreshToken
+    tokenUrl: https://auth.rephrase.ai/oauth/token
+scopes:
+  - scope: all:diy
+    description: >-
+      Default do-it-yourself (self-serve) access scope granted to Rephrase
+      Studio API tokens; covers actor/voice listing and video create/export/get
+      operations.
+    flows: [refreshToken]
+    sources: [https://studio-rephrase-api.readme.io/reference/get-access-token]

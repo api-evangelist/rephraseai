@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: probed
+note: >-
+  All rephrase.ai hosts resolve in DNS (216.227.142.171) but fail the TLS
+  handshake and serve no content — the standalone product was decommissioned
+  after Adobe's November 2023 acquisition. No /.well-known/ discovery documents
+  are reachable. Absence recorded as honest data.
+hosts:
+  - host: https://auth.rephrase.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 000
+      - path: /.well-known/openid-configuration
+        status: 000
+      - path: /.well-known/oauth-authorization-server
+        status: 000
+  - host: https://api.rephrase.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 000
+      - path: /.well-known/openid-configuration
+        status: 000
+      - path: /.well-known/oauth-authorization-server
+        status: 000

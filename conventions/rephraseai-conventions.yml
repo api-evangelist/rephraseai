@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: searched
+source: https://studio-rephrase-api.readme.io/reference/documentation
+note: >-
+  Cross-cutting semantics captured from the legacy Rephrase Studio API reference
+  (ReadMe). Company acquired by Adobe, Nov 2023; standalone API hosts appear
+  decommissioned. No idempotency, pagination, or rate-limit contract is
+  documented, so no Idempotency pointer is emitted.
+authentication:
+  style: oauth2-bearer
+  token_endpoint: https://auth.rephrase.ai/oauth/token
+  grant_type: refresh_token
+  request_header: 'Authorization: Bearer <access_token>'
+  token_lifetime_hours: 24
+  see: authentication/rephraseai-authentication.yml
+async_generation:
+  model: >-
+    Video creation is asynchronous. create-video returns a video_id; poll
+    get-video for status and the resulting video URL. A preview is available at
+    https://studio.rephrase.ai/create/<video_id>.
+idempotency:
+  supported: false
+  note: No idempotency-key mechanism documented.
+pagination:
+  supported: unknown
+  note: Not documented for actor/voice listing endpoints.
+versioning:
+  scheme: unknown
+  note: No public versioning policy documented.
+rate_limiting:
+  documented: false

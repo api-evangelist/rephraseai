@@ -1,20 +1,76 @@
 aid: rephraseai
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/rephraseai.png
 name: Rephrase.ai
-description: Rephrase.ai is a company surfaced as a portfolio company of techstars and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Rephrase.ai is a Bengaluru-based generative-AI startup whose text-to-video
+  platform, Rephrase Studio, turns plain text scripts into videos of digital
+  human avatars ("actors") that speak the script with lip-synced, natural
+  voices. It exposed a Rephrase Studio API for programmatic video generation
+  (list actors and voices, create and export videos, poll video status) secured
+  with OAuth2 bearer tokens. Backed by Techstars, Rephrase.ai was acquired by
+  Adobe in November 2023 and its technology folded into Adobe's video and
+  generative-AI offerings; the standalone product hosts have since been
+  decommissioned, though the legacy API reference remains hosted on ReadMe. This
+  profile is maintained by API Evangelist for historical and enrichment purposes.
 url: https://raw.githubusercontent.com/api-evangelist/rephraseai/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - techstars
+x-acquired-by: adobe
+x-acquired-date: '2023-11'
+x-status: acquired
 x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- Generative AI
+- Video
+- Text to Video
+- Avatars
+- Media
+- Content Creation
+apis:
+- name: Rephrase Studio API
+  description: >-
+    OAuth2 text-to-video generation API — list supported actors and voices,
+    create and export videos of speaking digital avatars, and poll video status.
+    Legacy surface; company acquired by Adobe (Nov 2023).
+  humanURL: https://studio-rephrase-api.readme.io/reference/documentation
+  baseURL: https://auth.rephrase.ai
+  tags:
+  - Video
+  - Generative AI
+  - Text to Video
+  properties:
+  - type: Documentation
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: APIReference
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: Authentication
+    url: authentication/rephraseai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/rephraseai-scopes.yml
+  - type: Conventions
+    url: conventions/rephraseai-conventions.yml
+  - type: MCPServer
+    url: mcp/rephraseai-mcp.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -23,3 +79,24 @@ maintainers:
 common:
 - type: Website
   url: https://rephrase.ai/
+- type: Documentation
+  url: https://studio-rephrase-api.readme.io/reference/documentation
+- type: APIReference
+  url: https://studio-rephrase-api.readme.io/reference/documentation
+- type: Authentication
+  url: authentication/rephraseai-authentication.yml
+- type: OAuthScopes
+  url: scopes/rephraseai-scopes.yml
+- type: Conventions
+  url: conventions/rephraseai-conventions.yml
+- type: MCPServer
+  url: mcp/rephraseai-mcp.yml
+- type: WellKnown
+  url: well-known/rephraseai-well-known.yml
+- type: LLMsTxt
+  url: llms/rephraseai-llms.txt
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 6
+  pass: local-v1
