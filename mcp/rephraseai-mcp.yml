@@ -2,27 +2,31 @@ generated: '2026-07-20'
 method: derived
 status: candidate
 source: https://studio-rephrase-api.readme.io/reference/documentation
-note: >-
-  No official hosted/remote MCP server exists for Rephrase.ai (company acquired
-  by Adobe, Nov 2023; standalone hosts decommissioned). This is a candidate tool
-  list derived from the operations documented in the legacy Rephrase Studio API
-  reference, not a published server.
+note: No official hosted/remote MCP server exists for Rephrase.ai (company acquired by Adobe, Nov 2023;
+  standalone hosts decommissioned). This is a candidate tool list derived from the operations documented
+  in the legacy Rephrase Studio API reference, not a published server.
 server:
   name: rephraseai
   transport: http
 tools:
-  - name: get_actors
-    description: Retrieve the list of supported presenter actors (avatars).
-    source_operation: rephrase-studio-api#get-actors
-  - name: get_voices
-    description: Retrieve the list of supported voices (voice_key values).
-    source_operation: rephrase-studio-api#get-voices
-  - name: create_video
-    description: Create a new text-to-video generation request with a chosen actor and voice.
-    source_operation: rephrase-studio-api#create-video
-  - name: export_video
-    description: Export a completed video for download.
-    source_operation: rephrase-studio-api#export-video
-  - name: get_video
-    description: Retrieve video details, status, and the output URL for a given video_id.
-    source_operation: rephrase-studio-api#get-video
+- name: get_actors
+  description: Retrieve the list of supported presenter actors (avatars).
+  source_operation: rephrase-studio-api#get-actors
+- name: get_voices
+  description: Retrieve the list of supported voices (voice_key values).
+  source_operation: rephrase-studio-api#get-voices
+- name: create_video
+  description: Create a new text-to-video generation request with a chosen actor and voice.
+  source_operation: rephrase-studio-api#create-video
+- name: export_video
+  description: Export a completed video for download.
+  source_operation: rephrase-studio-api#export-video
+- name: get_video
+  description: Retrieve video details, status, and the output URL for a given video_id.
+  source_operation: rephrase-studio-api#get-video
+deployment:
+  mode: none
+  verified: derived
+  tools: 5
+  checked: '2026-08-12'
+  source: catalog MCP census
