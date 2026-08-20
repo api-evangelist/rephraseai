@@ -42,6 +42,15 @@ tags:
 - Artificial Intelligence
 - Generative AI
 - Video
+- Text-to-Video
+- Avatars
+- Media
+- Content Creation
+tags_raw:
+- Company
+- Artificial Intelligence
+- Generative AI
+- Video
 - Text to Video
 - Avatars
 - Media
@@ -55,6 +64,10 @@ apis:
   humanURL: https://studio-rephrase-api.readme.io/reference/documentation
   baseURL: https://auth.rephrase.ai
   tags:
+  - Video
+  - Generative AI
+  - Text-to-Video
+  tags_raw:
   - Video
   - Generative AI
   - Text to Video
