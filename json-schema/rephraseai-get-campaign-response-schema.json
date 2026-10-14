@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/rephraseai/main/json-schema/rephraseai-get-campaign-response-schema.json",
+  "title": "GetCampaignResponse",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/GetCampaignResponse",
+  "required": [
+    "status"
+  ],
+  "type": "object",
+  "properties": {
+    "status": {
+      "$ref": "#/$defs/CampaignTemplateStatus"
+    },
+    "video_url": {
+      "title": "Video Url",
+      "maxLength": 2083,
+      "minLength": 1,
+      "type": "string",
+      "format": "uri"
+    },
+    "subtitles_url": {
+      "title": "Subtitles Url",
+      "maxLength": 2083,
+      "minLength": 1,
+      "type": "string",
+      "format": "uri"
+    },
+    "estimated_start_at": {
+      "title": "Estimated Start At",
+      "type": "string",
+      "format": "date-time"
+    },
+    "estimated_complete_at": {
+      "title": "Estimated Complete At",
+      "type": "string",
+      "format": "date-time"
+    },
+    "timeline": {
+      "$ref": "#/$defs/VideoGenerationTimeline"
+    },
+    "error_details": {
+      "$ref": "#/$defs/ErrorDetails"
+    },
+    "callback": {
+      "title": "Callback",
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "CampaignTemplateStatus": {
+      "title": "CampaignTemplateStatus",
+      "enum": [
+        "not_started",
+        "queued",
+        "under_process",
+        "complete",
+        "failed"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "ErrorDetails": {
+      "title": "ErrorDetails",
+      "required": [
+        "error_code",
+        "error_message"
+      ],
+      "type": "object",
+      "properties": {
+        "error_code": {
+          "title": "Error Code",
+          "type": "integer"
+        },
+        "error_message": {
+          "title": "Error Message",
+          "type": "string"
+        }
+      }
+    },
+    "VideoGenerationTimeline": {
+      "title": "VideoGenerationTimeline",
+      "required": [
+        "created_at",
+        "last_edited_at"
+      ],
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "title": "Created At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_edited_at": {
+          "title": "Last Edited At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "queued_at": {
+          "title": "Queued At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "started_at": {
+          "title": "Started At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "title": "Completed At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "failed_at": {
+          "title": "Failed At",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

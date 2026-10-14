@@ -1,0 +1,318 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/rephraseai-rephrase-studio-api-openapi.yml
+vocabulary:
+  name: Rephrase.ai Domain Vocabulary
+  description: 'Terms declared by Rephrase.ai''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: AuthRequest
+    definition: 'Object declared by the contract with fields: grant_type, client_id, scope, refresh_token.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/AuthRequest
+  - term: AuthResponse
+    definition: 'Object declared by the contract with fields: access_token, scope, expires_in, token_type.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/AuthResponse
+  - term: Preset
+    definition: 'Object declared by the contract with fields: description, thumbnailUrl.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/Preset
+  - term: SimplifiedActorVariant
+    definition: 'Object declared by the contract with fields: id, name, thumbnailUrl, backgroundUrl, suggestedVoices, presets.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedActorVariant
+  - term: SimplifiedActor
+    definition: 'Object declared by the contract with fields: gender, variants.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedActor
+  - term: SimplifiedVoice
+    definition: 'Object declared by the contract with fields: title, voice_key, gender, language, sample_link, voice_characteristics, use_cases,
+      captions_supported, markers_supported.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedVoice
+  - term: CreateCampaignResponse
+    definition: 'Object declared by the contract with fields: campaign_id, message.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/CreateCampaignResponse
+  - term: ResolutionOption
+    definition: 'Object declared by the contract with fields: height, width.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/ResolutionOption
+  - term: TextAsset
+    definition: 'Object declared by the contract with fields: kind, text, textStyle.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/TextAsset
+  - term: ImageAsset
+    definition: 'Object declared by the contract with fields: kind, use, url.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/ImageAsset
+  - term: VideoAsset
+    definition: 'Object declared by the contract with fields: kind, use, url.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/VideoAsset
+  - term: ShapeAsset
+    definition: 'Object declared by the contract with fields: kind, url, shapeStyle.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/ShapeAsset
+  - term: TranscriptType
+    definition: An enumeration.
+    tags:
+    - Enumeration
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/TranscriptType
+  - term: BackgroundOption
+    definition: 'Object declared by the contract with fields: alpha.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/BackgroundOption
+  - term: VideoOption
+    definition: 'Object declared by the contract with fields: resolution, background.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/VideoOption
+  - term: OutputParams
+    definition: 'Object declared by the contract with fields: video.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/OutputParams
+  - term: SpokespersonVideoDetail
+    definition: 'Object declared by the contract with fields: voiceId, model, transcript, modelPreset, windowSize, isVoiceOver, transcript_type,
+      output_params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SpokespersonVideoDetail
+  - term: SpokespersonAsset
+    definition: 'Object declared by the contract with fields: kind, spokespersonVideo.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SpokespersonAsset
+  - term: AudioAsset
+    definition: 'Object declared by the contract with fields: kind, url.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/AudioAsset
+  - term: EasingFunction
+    definition: An enumeration.
+    tags:
+    - Enumeration
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/EasingFunction
+  - term: TimingFunction
+    definition: 'Object declared by the contract with fields: type, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/TimingFunction
+  - term: AnimationPreset
+    definition: An enumeration.
+    tags:
+    - Enumeration
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/AnimationPreset
+  - term: AnimatableFields
+    definition: An enumeration.
+    tags:
+    - Enumeration
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/AnimatableFields
+  - term: AnimatableFieldValueRange
+    definition: 'Object declared by the contract with fields: name, startValue, endValue.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/AnimatableFieldValueRange
+  - term: SimplifiedAnimation
+    definition: 'Object declared by the contract with fields: offset, marker_id, type, duration, timingFunction, presets, fields.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedAnimation
+  - term: SimplifiedElement
+    definition: 'Object declared by the contract with fields: style, asset, animations.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedElement
+  - term: SimplifiedScene
+    definition: 'Object declared by the contract with fields: elements, duration.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedScene
+  - term: DissolveSceneTransition
+    definition: 'Object declared by the contract with fields: name.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/DissolveSceneTransition
+  - term: PushSceneTransitionParams
+    definition: 'Object declared by the contract with fields: direction, motionBlur.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/PushSceneTransitionParams
+  - term: PushSceneTransition
+    definition: 'Object declared by the contract with fields: name, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/PushSceneTransition
+  - term: SlideTransitionParams
+    definition: 'Object declared by the contract with fields: direction, motionBlur.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SlideTransitionParams
+  - term: SlideSceneTransition
+    definition: 'Object declared by the contract with fields: name, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SlideSceneTransition
+  - term: RollSceneTransitionParams
+    definition: 'Object declared by the contract with fields: rollAngle, motionBlur, direction.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/RollSceneTransitionParams
+  - term: RollSceneTransition
+    definition: 'Object declared by the contract with fields: name, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/RollSceneTransition
+  - term: StackSceneTransitionParams
+    definition: 'Object declared by the contract with fields: direction, motionBlur.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/StackSceneTransitionParams
+  - term: StackSceneTransition
+    definition: 'Object declared by the contract with fields: name, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/StackSceneTransition
+  - term: LinearDirectionTransitionParams
+    definition: 'Object declared by the contract with fields: direction.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/LinearDirectionTransitionParams
+  - term: LineWipeSceneTransition
+    definition: 'Object declared by the contract with fields: name, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/LineWipeSceneTransition
+  - term: CircleWipeTransitionParams
+    definition: 'Object declared by the contract with fields: motionBlur, direction.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/CircleWipeTransitionParams
+  - term: CircleWipeSceneTransition
+    definition: 'Object declared by the contract with fields: name, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/CircleWipeSceneTransition
+  - term: ZoomTransitionParams
+    definition: 'Object declared by the contract with fields: motionBlur, direction.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/ZoomTransitionParams
+  - term: ZoomSceneTransition
+    definition: 'Object declared by the contract with fields: name, params.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/ZoomSceneTransition
+  - term: SimplifiedFullSceneTransition
+    definition: 'Object declared by the contract with fields: duration, preset, timingFunction.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedFullSceneTransition
+  - term: SimplifiedSceneTransitionSpec
+    definition: 'Object declared by the contract with fields: startScene, endScene, transition.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedSceneTransitionSpec
+  - term: BackgroundAudioAsset
+    definition: 'Object declared by the contract with fields: url.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/BackgroundAudioAsset
+  - term: SimplifiedMediaElementProps
+    definition: 'Object declared by the contract with fields: volume.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedMediaElementProps
+  - term: SimplifiedBackgroundMusicElement
+    definition: 'Object declared by the contract with fields: style, asset, animations, mediaElProps.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedBackgroundMusicElement
+  - term: SimplifiedCallbackSpecs
+    definition: 'Object declared by the contract with fields: url, params, headers, body.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedCallbackSpecs
+  - term: SimplifiedCallbackDetails
+    definition: 'Object declared by the contract with fields: success, failure.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedCallbackDetails
+  - term: CampaignSettings
+    definition: 'Object declared by the contract with fields: videoQuality.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/CampaignSettings
+  - term: SimplifiedCreateCampaignRequest
+    definition: 'Object declared by the contract with fields: title, name, thumbnailUrl, videoDimension, scenes, sceneTransitions, backgroundMusic,
+      hardcode_subtitles, generate_srt_file, callbacks, settings.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedCreateCampaignRequest
+  - term: ExportCampaignResponse
+    definition: 'Object declared by the contract with fields: details, credits_left.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/ExportCampaignResponse
+  - term: CampaignTemplateStatus
+    definition: An enumeration.
+    tags:
+    - Enumeration
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/CampaignTemplateStatus
+  - term: VideoGenerationTimeline
+    definition: 'Object declared by the contract with fields: created_at, last_edited_at, queued_at, started_at, completed_at, failed_at.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/VideoGenerationTimeline
+  - term: ErrorDetails
+    definition: 'Object declared by the contract with fields: error_code, error_message.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/ErrorDetails
+  - term: GetCampaignResponse
+    definition: 'Object declared by the contract with fields: status, video_url, subtitles_url, estimated_start_at, estimated_complete_at, timeline,
+      error_details, callback.'
+    tags:
+    - Object
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/GetCampaignResponse
+  - term: Authentication
+    definition: 'Resource group in the contract; its operation POST /auth.rephrase.ai/oauth/token: Contact us at [help@rephrase.ai](mailto:help@rephrase.ai)
+      for your Client ID and Refresh Token.'
+    tags:
+    - Resource Group
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml
+  - term: Actor
+    definition: 'Resource group in the contract; its operation GET /personalized-brand.api.rephrase.ai/v2/actors: This API returns list of all
+      supported actors'
+    tags:
+    - Resource Group
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml
+  - term: Video
+    definition: 'Resource group in the contract; its operation POST /personalized-brand.api.rephrase.ai/v2/campaign/create: ## Introduction The
+      request primarily consists of `scenes`.'
+    tags:
+    - Resource Group
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml
+  - term: Voice
+    definition: 'Resource group in the contract; its operation GET /personalized-brand.api.rephrase.ai/v2/voices: This API returns list of all
+      supported voices'
+    tags:
+    - Resource Group
+    source: openapi/rephraseai-rephrase-studio-api-openapi.yml

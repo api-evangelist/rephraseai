@@ -1,4 +1,5 @@
 aid: rephraseai
+
 deliveryModel:
   model: unknown
   open_source: false
@@ -10,6 +11,7 @@ deliveryModel:
   - none
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -22,32 +24,43 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/rephraseai.png
+
 name: Rephrase.ai
-description: >-
-  Rephrase.ai is a Bengaluru-based generative-AI startup whose text-to-video
-  platform, Rephrase Studio, turns plain text scripts into videos of digital
-  human avatars ("actors") that speak the script with lip-synced, natural
-  voices. It exposed a Rephrase Studio API for programmatic video generation
-  (list actors and voices, create and export videos, poll video status) secured
-  with OAuth2 bearer tokens. Backed by Techstars, Rephrase.ai was acquired by
-  Adobe in November 2023 and its technology folded into Adobe's video and
-  generative-AI offerings; the standalone product hosts have since been
-  decommissioned, though the legacy API reference remains hosted on ReadMe. This
-  profile is maintained by API Evangelist for historical and enrichment purposes.
+
+description: Rephrase.ai is a Bengaluru-based generative-AI startup whose text-to-video platform, Rephrase Studio, turns plain text scripts into
+  videos of digital human avatars ("actors") that speak the script with lip-synced, natural voices. It exposed a Rephrase Studio API for programmatic
+  video generation (list actors and voices, create and export videos, poll video status) secured with OAuth2 bearer tokens. Backed by Techstars,
+  Rephrase.ai was acquired by Adobe in November 2023 and its technology folded into Adobe's video and generative-AI offerings; the standalone
+  product hosts have since been decommissioned, though the legacy API reference remains hosted on ReadMe. This profile is maintained by API Evangelist
+  for historical and enrichment purposes.
+
 url: https://raw.githubusercontent.com/api-evangelist/rephraseai/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: vc-portfolio
+
 x-backed-by:
 - techstars
+
 x-acquired-by: adobe
-x-acquired-date: '2023-11'
+
+x-acquired-date: 2023-11
+
 x-status: acquired
+
 x-tier: stub
+
 x-tier-reason: portfolio-lead
+
 specificationVersion: '0.23'
+
 created: '2026-07-17'
+
 modified: '2026-07-20'
+
 tags:
 - Company
 - Artificial Intelligence
@@ -57,6 +70,7 @@ tags:
 - Avatars
 - Media
 - Content Creation
+
 tags_raw:
 - Company
 - Artificial Intelligence
@@ -66,42 +80,32 @@ tags_raw:
 - Avatars
 - Media
 - Content Creation
-apis:
-- name: Rephrase Studio API
-  description: >-
-    OAuth2 text-to-video generation API — list supported actors and voices,
-    create and export videos of speaking digital avatars, and poll video status.
-    Legacy surface; company acquired by Adobe (Nov 2023).
-  humanURL: https://studio-rephrase-api.readme.io/reference/documentation
-  baseURL: https://auth.rephrase.ai
-  tags:
-  - Video
-  - Generative AI
-  - Text-to-Video
-  tags_raw:
-  - Video
-  - Generative AI
-  - Text to Video
-  properties:
-  - type: Documentation
-    url: https://studio-rephrase-api.readme.io/reference/documentation
-  - type: APIReference
-    url: https://studio-rephrase-api.readme.io/reference/documentation
-  - type: Authentication
-    url: authentication/rephraseai-authentication.yml
-  - type: OAuthScopes
-    url: scopes/rephraseai-scopes.yml
-  - type: Conventions
-    url: conventions/rephraseai-conventions.yml
-  - type: X-MCPServerCandidate
-    url: mcp/rephraseai-mcp.yml
-    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/rephraseai-agentic-access.yml
+- type: Spectral
+  url: rules/rephraseai-rules.yml
+- type: JSONLD
+  url: json-ld/rephraseai-context.jsonld
+- type: Vocabulary
+  url: vocabulary/rephraseai-vocabulary.yml
+- type: DataModel
+  url: data-model/rephraseai-data-model.yml
+- type: Conformance
+  url: conformance/rephraseai-conformance.yml
+- type: Hosts
+  url: hosts/rephraseai-hosts.yml
+- type: Vendors
+  url: vendors/rephraseai-vendors.yml
+- type: DomainSecurity
+  url: security/rephraseai-domain-security.yml
 - type: Website
   url: https://rephrase.ai/
 - type: Documentation
@@ -116,22 +120,75 @@ common:
   url: conventions/rephraseai-conventions.yml
 - type: X-MCPServerCandidate
   url: mcp/rephraseai-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+    API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+    the artifact-type surfaces with a server that does not exist.'
 - type: WellKnown
   url: well-known/rephraseai-well-known.yml
-- type: LLMsTxt
-  url: llms/rephraseai-llms.txt
+
+apis:
+- name: Rephrase Studio API
+  description: OAuth2 text-to-video generation API — list supported actors and voices, create and export videos of speaking digital avatars, and
+    poll video status. Legacy surface; company acquired by Adobe (Nov 2023).
+  humanURL: https://studio-rephrase-api.readme.io/reference/documentation
+  baseURL: https://auth.rephrase.ai
+  tags:
+  - Video
+  - Generative AI
+  - Text-to-Video
+  tags_raw:
+  - Video
+  - Generative AI
+  - Text to Video
+  properties:
+  - url: openapi/rephraseai-rephrase-studio-api-openapi.yml
+    type: OpenAPI
+  - type: Documentation
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: APIReference
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: Authentication
+    url: authentication/rephraseai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/rephraseai-scopes.yml
+  - type: Conventions
+    url: conventions/rephraseai-conventions.yml
+  - type: X-MCPServerCandidate
+    url: mcp/rephraseai-mcp.yml
+    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+      API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+      the artifact-type surfaces with a server that does not exist.'
+  - type: JSONSchema
+    url: json-schema/rephraseai-simplified-create-campaign-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-get-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-export-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-create-campaign-response-schema.json
+  aid: rephraseai:rephrase-studio-api
+
 x-enrichment:
   date: '2026-07-20'
   status: enriched
   artifacts_added: 6
   pass: local-v1
+
 x-lifecycle:
   state: deprecated
   reason: domain-does-not-resolve
   observed: '2026-09-27'
-  detail: >-
-    The company's own domain returned no A or AAAA record when probed. This is an observation about the domain, not a request from the company.
+  detail: The company's own domain returned no A or AAAA record when probed. This is an observation about the domain, not a request from the company.
   indexed: true
   successor: adobe
   successor_in_catalog: true
+
+x-readme-harvest:
+  date: '2026-10-14'
+  ops: 6
+  tool: harvest-readme-openapi.py
+  portal: https://studio-rephrase-api.readme.io

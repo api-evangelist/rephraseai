@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/rephraseai/main/json-schema/rephraseai-auth-response-schema.json",
+  "title": "AuthResponse",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/AuthResponse",
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "default": "<access_token>"
+    },
+    "scope": {
+      "title": "Scope",
+      "type": "string",
+      "default": "read:rephrase.ai read:rephrase.ai offline_access"
+    },
+    "expires_in": {
+      "title": "Expires In",
+      "type": "integer",
+      "default": 86400
+    },
+    "token_type": {
+      "title": "Token Type",
+      "type": "string",
+      "default": "Bearer"
+    }
+  }
+}

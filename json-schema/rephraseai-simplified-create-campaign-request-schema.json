@@ -1,0 +1,1171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/rephraseai/main/json-schema/rephraseai-simplified-create-campaign-request-schema.json",
+  "title": "SimplifiedCreateCampaignRequest",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/rephraseai-rephrase-studio-api-openapi.yml#/components/schemas/SimplifiedCreateCampaignRequest",
+  "type": "object",
+  "properties": {
+    "title": {
+      "title": "Title",
+      "type": "string",
+      "description": "Title of the video.",
+      "default": "Default Video"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "Name of the video."
+    },
+    "thumbnailUrl": {
+      "title": "Thumbnailurl",
+      "type": "string",
+      "description": "Thumbnail URL for the video."
+    },
+    "videoDimension": {
+      "title": "Videodimension",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ResolutionOption"
+        }
+      ],
+      "default": {
+        "height": 1080,
+        "width": 1920
+      }
+    },
+    "scenes": {
+      "title": "Scenes",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SimplifiedScene"
+      },
+      "default": [
+        {
+          "elements": [
+            {
+              "style": {
+                "height": "100%",
+                "position": "absolute",
+                "width": "100%",
+                "zIndex": 1
+              },
+              "asset": {
+                "kind": "Image",
+                "use": "Background",
+                "url": "https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/panel_defaults/background/image/white.webp"
+              }
+            },
+            {
+              "style": {
+                "zIndex": 2,
+                "opacity": 1,
+                "height": "986px",
+                "width": "1231.130615234375px",
+                "position": "absolute",
+                "bottom": "0px",
+                "left": "343.935546875px",
+                "objectFit": "contain",
+                "transform": "rotate(0deg)",
+                "objectPosition": "bottom"
+              },
+              "asset": {
+                "kind": "Spokesperson",
+                "spokespersonVideo": {
+                  "voiceId": "en-US-JennyMultilingualNeural__002",
+                  "model": "c1c1c529-28a3-51ce-b028-140c1c79a3ad",
+                  "transcript": "<speak>Change this template text to add your own</speak>",
+                  "modelPreset": "CU",
+                  "transcript_type": "SSML_LIMITED"
+                }
+              },
+              "animations": [
+                {
+                  "offset": 0,
+                  "type": "start",
+                  "duration": 0.3,
+                  "timingFunction": {
+                    "type": "elastic"
+                  },
+                  "presets": [
+                    "fade_in"
+                  ]
+                },
+                {
+                  "offset": 0,
+                  "type": "end",
+                  "duration": 0.3,
+                  "timingFunction": {
+                    "type": "elastic"
+                  },
+                  "presets": [
+                    "fade_out"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "sceneTransitions": {
+      "title": "Scenetransitions",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SimplifiedSceneTransitionSpec"
+      }
+    },
+    "backgroundMusic": {
+      "$ref": "#/$defs/SimplifiedBackgroundMusicElement"
+    },
+    "hardcode_subtitles": {
+      "title": "Hardcode Subtitles",
+      "type": "boolean"
+    },
+    "generate_srt_file": {
+      "title": "Generate Srt File",
+      "type": "boolean"
+    },
+    "callbacks": {
+      "$ref": "#/$defs/SimplifiedCallbackDetails"
+    },
+    "settings": {
+      "title": "Settings",
+      "allOf": [
+        {
+          "$ref": "#/$defs/CampaignSettings"
+        }
+      ],
+      "default": {}
+    }
+  },
+  "$defs": {
+    "AnimatableFieldValueRange": {
+      "title": "AnimatableFieldValueRange",
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/AnimatableFields"
+            }
+          ],
+          "description": "The name of the animation property."
+        },
+        "startValue": {
+          "title": "Startvalue",
+          "type": "number",
+          "description": "The start value of the animation."
+        },
+        "endValue": {
+          "title": "Endvalue",
+          "type": "number",
+          "description": "The end value of the animation."
+        }
+      }
+    },
+    "AnimatableFields": {
+      "title": "AnimatableFields",
+      "enum": [
+        "opacity",
+        "bottom",
+        "left",
+        "top",
+        "right",
+        "height",
+        "width",
+        "scale",
+        "scaleX",
+        "scaleY",
+        "scaleZ",
+        "rotate",
+        "rotateX",
+        "rotateY",
+        "rotateZ",
+        "skewX",
+        "skewY"
+      ],
+      "description": "An enumeration."
+    },
+    "AnimationPreset": {
+      "title": "AnimationPreset",
+      "enum": [
+        "fade_in",
+        "fade_out",
+        "scale_in",
+        "scale_out",
+        "slide_in_left",
+        "slide_in_right",
+        "slide_in_top",
+        "slide_in_bottom",
+        "slide_out_left",
+        "slide_out_right",
+        "slide_out_top",
+        "slide_out_bottom"
+      ],
+      "description": "An enumeration."
+    },
+    "AudioAsset": {
+      "title": "AudioAsset",
+      "required": [
+        "kind",
+        "url"
+      ],
+      "type": "object",
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "enum": [
+            "Audio"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string",
+          "description": "The URL of the audio.",
+          "format": "uri"
+        }
+      }
+    },
+    "BackgroundAudioAsset": {
+      "title": "BackgroundAudioAsset",
+      "required": [
+        "url"
+      ],
+      "type": "object",
+      "properties": {
+        "url": {
+          "title": "Url",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string",
+          "description": "The URL of the audio.",
+          "format": "uri"
+        }
+      }
+    },
+    "BackgroundOption": {
+      "title": "BackgroundOption",
+      "required": [
+        "alpha"
+      ],
+      "type": "object",
+      "properties": {
+        "alpha": {
+          "title": "Alpha",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number",
+          "description": "Alpha channel value for the background. Ranges from 0 to 1."
+        }
+      }
+    },
+    "CampaignSettings": {
+      "title": "CampaignSettings",
+      "type": "object",
+      "properties": {
+        "videoQuality": {
+          "title": "Videoquality",
+          "maximum": 20,
+          "minimum": 1,
+          "type": "integer",
+          "description": "Quality of the video. It is an integer value, with higher value representing better video quality. Default quality is '18'."
+        }
+      }
+    },
+    "CircleWipeSceneTransition": {
+      "title": "CircleWipeSceneTransition",
+      "required": [
+        "name",
+        "params"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "circleWipe"
+          ],
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/CircleWipeTransitionParams"
+        }
+      }
+    },
+    "CircleWipeTransitionParams": {
+      "title": "CircleWipeTransitionParams",
+      "required": [
+        "direction"
+      ],
+      "type": "object",
+      "properties": {
+        "motionBlur": {
+          "title": "Motionblur",
+          "type": "string",
+          "description": "Motion blur effect for the transition. Default is '0px', i.e. no motion blur."
+        },
+        "direction": {
+          "title": "Direction",
+          "enum": [
+            "insideOut",
+            "outsideIn"
+          ],
+          "type": "string",
+          "description": "Direction of the circle wipe transition. It can be 'insideOut' or 'outsideIn'."
+        }
+      }
+    },
+    "DissolveSceneTransition": {
+      "title": "DissolveSceneTransition",
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "dissolve"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "EasingFunction": {
+      "title": "EasingFunction",
+      "enum": [
+        "linear",
+        "quad",
+        "cubic",
+        "cubic-bezier",
+        "circle",
+        "sin",
+        "exp",
+        "bounce",
+        "elastic"
+      ],
+      "description": "An enumeration."
+    },
+    "ImageAsset": {
+      "title": "ImageAsset",
+      "required": [
+        "kind",
+        "url"
+      ],
+      "type": "object",
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "enum": [
+            "Image"
+          ],
+          "type": "string"
+        },
+        "use": {
+          "title": "Use",
+          "enum": [
+            "Background"
+          ],
+          "type": "string",
+          "description": "Set to 'Background' to use the image as a background."
+        },
+        "url": {
+          "title": "Url",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string",
+          "description": "The URL of the image.",
+          "format": "uri"
+        }
+      }
+    },
+    "LineWipeSceneTransition": {
+      "title": "LineWipeSceneTransition",
+      "required": [
+        "name",
+        "params"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "lineWipe"
+          ],
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/LinearDirectionTransitionParams"
+        }
+      }
+    },
+    "LinearDirectionTransitionParams": {
+      "title": "LinearDirectionTransitionParams",
+      "type": "object",
+      "properties": {
+        "direction": {
+          "title": "Direction",
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom"
+          ],
+          "type": "string",
+          "description": "Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'."
+        }
+      }
+    },
+    "OutputParams": {
+      "title": "OutputParams",
+      "type": "object",
+      "properties": {
+        "video": {
+          "$ref": "#/$defs/VideoOption"
+        }
+      }
+    },
+    "PushSceneTransition": {
+      "title": "PushSceneTransition",
+      "required": [
+        "name",
+        "params"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "push"
+          ],
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/PushSceneTransitionParams"
+        }
+      }
+    },
+    "PushSceneTransitionParams": {
+      "title": "PushSceneTransitionParams",
+      "type": "object",
+      "properties": {
+        "direction": {
+          "title": "Direction",
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom"
+          ],
+          "type": "string",
+          "description": "Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'."
+        },
+        "motionBlur": {
+          "title": "Motionblur",
+          "type": "string",
+          "description": "Motion blur effect for the transition. Default is '0px', i.e. no motion blur."
+        }
+      }
+    },
+    "ResolutionOption": {
+      "title": "ResolutionOption",
+      "type": "object",
+      "properties": {
+        "height": {
+          "title": "Height",
+          "type": "integer"
+        },
+        "width": {
+          "title": "Width",
+          "type": "integer"
+        }
+      }
+    },
+    "RollSceneTransition": {
+      "title": "RollSceneTransition",
+      "required": [
+        "name",
+        "params"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "roll"
+          ],
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/RollSceneTransitionParams"
+        }
+      }
+    },
+    "RollSceneTransitionParams": {
+      "title": "RollSceneTransitionParams",
+      "required": [
+        "direction"
+      ],
+      "type": "object",
+      "properties": {
+        "rollAngle": {
+          "title": "Rollangle",
+          "type": "number",
+          "description": "Roll angle for the transition. It is represented as a float. Default is '0', i.e. no roll."
+        },
+        "motionBlur": {
+          "title": "Motionblur",
+          "type": "string",
+          "description": "Motion blur effect for the transition. Default is '0px', i.e. no motion blur."
+        },
+        "direction": {
+          "title": "Direction",
+          "enum": [
+            "clockwise",
+            "anticlockwise"
+          ],
+          "type": "string",
+          "description": "Direction of the roll transition. It can be 'clockwise' or 'anticlockwise'."
+        }
+      }
+    },
+    "ShapeAsset": {
+      "title": "ShapeAsset",
+      "required": [
+        "kind",
+        "url"
+      ],
+      "type": "object",
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "enum": [
+            "Shape"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string",
+          "description": "The URL of the shape.",
+          "format": "uri"
+        },
+        "shapeStyle": {
+          "title": "Shapestyle",
+          "type": "object",
+          "description": "The styling for the shape."
+        }
+      }
+    },
+    "SimplifiedAnimation": {
+      "title": "SimplifiedAnimation",
+      "required": [
+        "type",
+        "duration",
+        "timingFunction"
+      ],
+      "type": "object",
+      "properties": {
+        "offset": {
+          "title": "Offset",
+          "type": "number",
+          "description": "Offset in seconds to start the animation. Either Offset or Marker Id is required."
+        },
+        "marker_id": {
+          "title": "Marker Id",
+          "type": "string",
+          "description": "Marker id to start the animation. Markers can only be used with marker supported voices. Either Offset or Marker Id is required."
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "start",
+            "end"
+          ],
+          "type": "string",
+          "description": "Specify if it's a start animation or an end animation."
+        },
+        "duration": {
+          "title": "Duration",
+          "type": "number",
+          "description": "The duration of the animation in seconds."
+        },
+        "timingFunction": {
+          "title": "Timingfunction",
+          "allOf": [
+            {
+              "$ref": "#/$defs/TimingFunction"
+            }
+          ],
+          "description": "Timing function to determine how the animation will progress."
+        },
+        "presets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnimationPreset"
+          },
+          "description": "The type of animation."
+        },
+        "fields": {
+          "title": "Fields",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnimatableFieldValueRange"
+          }
+        }
+      }
+    },
+    "SimplifiedBackgroundMusicElement": {
+      "title": "SimplifiedBackgroundMusicElement",
+      "required": [
+        "asset",
+        "mediaElProps"
+      ],
+      "type": "object",
+      "properties": {
+        "style": {
+          "title": "Style",
+          "type": "object",
+          "description": "Style properties for the background music element."
+        },
+        "asset": {
+          "$ref": "#/$defs/BackgroundAudioAsset"
+        },
+        "animations": {
+          "title": "Animations",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SimplifiedAnimation"
+          }
+        },
+        "mediaElProps": {
+          "$ref": "#/$defs/SimplifiedMediaElementProps"
+        }
+      }
+    },
+    "SimplifiedCallbackDetails": {
+      "title": "SimplifiedCallbackDetails",
+      "type": "object",
+      "properties": {
+        "success": {
+          "$ref": "#/$defs/SimplifiedCallbackSpecs"
+        },
+        "failure": {
+          "$ref": "#/$defs/SimplifiedCallbackSpecs"
+        }
+      }
+    },
+    "SimplifiedCallbackSpecs": {
+      "title": "SimplifiedCallbackSpecs",
+      "required": [
+        "url"
+      ],
+      "type": "object",
+      "properties": {
+        "url": {
+          "title": "Url",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string",
+          "description": "URL of the callback request.",
+          "format": "uri"
+        },
+        "params": {
+          "title": "Params",
+          "type": "object",
+          "description": "Parameters of the callback request."
+        },
+        "headers": {
+          "title": "Headers",
+          "type": "object",
+          "description": "Headers of the callback request."
+        },
+        "body": {
+          "title": "Body",
+          "type": "object",
+          "description": "Body of the callback request."
+        }
+      }
+    },
+    "SimplifiedElement": {
+      "title": "SimplifiedElement",
+      "required": [
+        "style",
+        "asset"
+      ],
+      "type": "object",
+      "properties": {
+        "style": {
+          "title": "Style",
+          "type": "object",
+          "description": "Style properties for the element."
+        },
+        "asset": {
+          "title": "Asset",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TextAsset"
+            },
+            {
+              "$ref": "#/$defs/ImageAsset"
+            },
+            {
+              "$ref": "#/$defs/VideoAsset"
+            },
+            {
+              "$ref": "#/$defs/ShapeAsset"
+            },
+            {
+              "$ref": "#/$defs/SpokespersonAsset"
+            },
+            {
+              "$ref": "#/$defs/AudioAsset"
+            }
+          ]
+        },
+        "animations": {
+          "title": "Animations",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SimplifiedAnimation"
+          }
+        }
+      }
+    },
+    "SimplifiedFullSceneTransition": {
+      "title": "SimplifiedFullSceneTransition",
+      "required": [
+        "duration",
+        "preset",
+        "timingFunction"
+      ],
+      "type": "object",
+      "properties": {
+        "duration": {
+          "title": "Duration",
+          "type": "number",
+          "description": "Duration of the full scene transition in seconds."
+        },
+        "preset": {
+          "title": "Preset",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DissolveSceneTransition"
+            },
+            {
+              "$ref": "#/$defs/PushSceneTransition"
+            },
+            {
+              "$ref": "#/$defs/SlideSceneTransition"
+            },
+            {
+              "$ref": "#/$defs/RollSceneTransition"
+            },
+            {
+              "$ref": "#/$defs/StackSceneTransition"
+            },
+            {
+              "$ref": "#/$defs/LineWipeSceneTransition"
+            },
+            {
+              "$ref": "#/$defs/CircleWipeSceneTransition"
+            },
+            {
+              "$ref": "#/$defs/ZoomSceneTransition"
+            }
+          ],
+          "description": "The type of scene transition."
+        },
+        "timingFunction": {
+          "title": "Timingfunction",
+          "allOf": [
+            {
+              "$ref": "#/$defs/TimingFunction"
+            }
+          ],
+          "description": "Timing function to determine how the transition will progress."
+        }
+      }
+    },
+    "SimplifiedMediaElementProps": {
+      "title": "SimplifiedMediaElementProps",
+      "required": [
+        "volume"
+      ],
+      "type": "object",
+      "properties": {
+        "volume": {
+          "title": "Volume",
+          "maximum": 1,
+          "exclusiveMinimum": false,
+          "type": "number",
+          "description": "Volume of the media element. Ranges from 0 to 1."
+        }
+      }
+    },
+    "SimplifiedScene": {
+      "title": "SimplifiedScene",
+      "required": [
+        "elements"
+      ],
+      "type": "object",
+      "properties": {
+        "elements": {
+          "title": "Elements",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SimplifiedElement"
+          },
+          "description": "Elements which make up a particular scene. This would include all the information related to styling and assets required to create a scene."
+        },
+        "duration": {
+          "title": "Duration",
+          "type": "number",
+          "description": "Duration of the scene in seconds."
+        }
+      }
+    },
+    "SimplifiedSceneTransitionSpec": {
+      "title": "SimplifiedSceneTransitionSpec",
+      "required": [
+        "transition"
+      ],
+      "type": "object",
+      "properties": {
+        "startScene": {
+          "title": "Startscene",
+          "type": "integer",
+          "description": "Starting scene index for the transition. Scenes are indexed from 0."
+        },
+        "endScene": {
+          "title": "Endscene",
+          "type": "integer",
+          "description": "Ending scene index for the transition. Scenes are indexed from 0."
+        },
+        "transition": {
+          "$ref": "#/$defs/SimplifiedFullSceneTransition"
+        }
+      }
+    },
+    "SlideSceneTransition": {
+      "title": "SlideSceneTransition",
+      "required": [
+        "name",
+        "params"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "slide"
+          ],
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/SlideTransitionParams"
+        }
+      }
+    },
+    "SlideTransitionParams": {
+      "title": "SlideTransitionParams",
+      "type": "object",
+      "properties": {
+        "direction": {
+          "title": "Direction",
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom"
+          ],
+          "type": "string",
+          "description": "Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'."
+        },
+        "motionBlur": {
+          "title": "Motionblur",
+          "type": "string",
+          "description": "Motion blur effect for the transition. Default is '0px', i.e. no motion blur."
+        }
+      }
+    },
+    "SpokespersonAsset": {
+      "title": "SpokespersonAsset",
+      "required": [
+        "kind",
+        "spokespersonVideo"
+      ],
+      "type": "object",
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "enum": [
+            "Spokesperson"
+          ],
+          "type": "string"
+        },
+        "spokespersonVideo": {
+          "$ref": "#/$defs/SpokespersonVideoDetail"
+        }
+      }
+    },
+    "SpokespersonVideoDetail": {
+      "title": "SpokespersonVideoDetail",
+      "required": [
+        "voiceId",
+        "model",
+        "transcript"
+      ],
+      "type": "object",
+      "properties": {
+        "voiceId": {
+          "title": "Voiceid",
+          "type": "string",
+          "description": "Unique identifier for the selected voice."
+        },
+        "model": {
+          "title": "Model",
+          "type": "string",
+          "description": "Unique identifier for the actor to use for generating the video."
+        },
+        "transcript": {
+          "title": "Transcript",
+          "type": "string",
+          "description": "The transcript of the message the spokesperson will deliver."
+        },
+        "modelPreset": {
+          "title": "Modelpreset",
+          "type": "string",
+          "description": "Preset id to use for the actor. Default is 'MS'."
+        },
+        "windowSize": {
+          "title": "Windowsize",
+          "enum": [
+            "transparent",
+            "circular"
+          ],
+          "type": "string",
+          "description": "Background type for the Spokesperson. Default is 'transparent'."
+        },
+        "isVoiceOver": {
+          "title": "Isvoiceover",
+          "type": "boolean",
+          "description": "True for voice only scenes."
+        },
+        "transcript_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TranscriptType"
+            }
+          ],
+          "description": "Type of transcript. Default is 'SSML_LIMITED'."
+        },
+        "output_params": {
+          "$ref": "#/$defs/OutputParams"
+        }
+      }
+    },
+    "StackSceneTransition": {
+      "title": "StackSceneTransition",
+      "required": [
+        "name",
+        "params"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "stack"
+          ],
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/StackSceneTransitionParams"
+        }
+      }
+    },
+    "StackSceneTransitionParams": {
+      "title": "StackSceneTransitionParams",
+      "type": "object",
+      "properties": {
+        "direction": {
+          "title": "Direction",
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom"
+          ],
+          "type": "string",
+          "description": "Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'."
+        },
+        "motionBlur": {
+          "title": "Motionblur",
+          "type": "string",
+          "description": "Motion blur effect for the transition. Default is '0px', i.e. no motion blur."
+        }
+      }
+    },
+    "TextAsset": {
+      "title": "TextAsset",
+      "required": [
+        "kind",
+        "text"
+      ],
+      "type": "object",
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "enum": [
+            "Text"
+          ],
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "description": "The actual text content."
+        },
+        "textStyle": {
+          "title": "Textstyle",
+          "type": "object",
+          "description": "The styling for the text."
+        }
+      }
+    },
+    "TimingFunction": {
+      "title": "TimingFunction",
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/EasingFunction"
+            }
+          ],
+          "description": "The type of the timing function."
+        },
+        "params": {
+          "title": "Params",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "An array of parameters for the timing function."
+        }
+      }
+    },
+    "TranscriptType": {
+      "title": "TranscriptType",
+      "enum": [
+        "TEXT",
+        "SSML_STANDARD",
+        "SSML_LIMITED"
+      ],
+      "description": "An enumeration."
+    },
+    "VideoAsset": {
+      "title": "VideoAsset",
+      "required": [
+        "kind",
+        "url"
+      ],
+      "type": "object",
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "enum": [
+            "Video"
+          ],
+          "type": "string"
+        },
+        "use": {
+          "title": "Use",
+          "enum": [
+            "Background"
+          ],
+          "type": "string",
+          "description": "Set to 'Background' to use the video as a background."
+        },
+        "url": {
+          "title": "Url",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string",
+          "description": "The URL of the video.",
+          "format": "uri"
+        }
+      }
+    },
+    "VideoOption": {
+      "title": "VideoOption",
+      "type": "object",
+      "properties": {
+        "resolution": {
+          "$ref": "#/$defs/ResolutionOption"
+        },
+        "background": {
+          "$ref": "#/$defs/BackgroundOption"
+        }
+      }
+    },
+    "ZoomSceneTransition": {
+      "title": "ZoomSceneTransition",
+      "required": [
+        "name",
+        "params"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "zoom"
+          ],
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/ZoomTransitionParams"
+        }
+      }
+    },
+    "ZoomTransitionParams": {
+      "title": "ZoomTransitionParams",
+      "required": [
+        "direction"
+      ],
+      "type": "object",
+      "properties": {
+        "motionBlur": {
+          "title": "Motionblur",
+          "type": "string",
+          "description": "Motion blur effect for the transition. Default is '0px', i.e. no motion blur."
+        },
+        "direction": {
+          "title": "Direction",
+          "enum": [
+            "zoomIn",
+            "zoomOut"
+          ],
+          "type": "string",
+          "description": "Direction of the zoom transition. It can be 'zoomIn' or 'zoomOut'."
+        }
+      }
+    }
+  }
+}

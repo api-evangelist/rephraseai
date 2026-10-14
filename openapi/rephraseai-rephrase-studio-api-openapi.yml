@@ -1,0 +1,3048 @@
+openapi: 3.0.3
+info:
+  title: Rephrase Studio API
+  version: v2
+servers:
+- url: /
+paths:
+  /auth.rephrase.ai/oauth/token:
+    post:
+      tags:
+      - Authentication
+      summary: Get Access Token
+      description: '
+
+        Contact us at [help@rephrase.ai](mailto:help@rephrase.ai) for your Client ID and Refresh Token.
+
+
+        1. You can use your Client ID and Refresh Token to generate an Access Token.
+
+        2. Access Tokens generated are valid for 24 hours.
+
+        3. For usage of any other API calls, your request header needs `Authorization: Bearer <access_token>`
+
+        '
+      operationId: get-access-token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+        required: false
+      responses:
+        '200':
+          description: Authentication Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+      deprecated: false
+      servers:
+      - url: https://auth.rephrase.ai
+  /personalized-brand.api.rephrase.ai/v2/actors:
+    get:
+      tags:
+      - Actor
+      summary: Get all supported actors
+      description: '
+
+        This API returns list of all supported actors
+
+        '
+      operationId: get-actors
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorize the request using your access token.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: Bearer <access_token>
+      requestBody:
+        content:
+          application/json: {}
+        required: false
+      responses:
+        '200':
+          description: Response is a mapping of actor ids and corresponding actor properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimplifiedActorDict'
+              example:
+                brianna:
+                  gender: female
+                  variants:
+                    c1c1c529-28a3-51ce-b028-140c1c79a3ad:
+                      id: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                      name: Brianna Hill
+                      thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/c1c1c529-28a3-51ce-b028-140c1c79a3ad___c1c1c529-28a3-51ce-b028-140c1c79a3ad___ms_update.webp
+                      backgroundUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/white_bg.png
+                      suggestedVoices:
+                      - AVA_M__004
+                      - en-IN-NeerjaNeural__002
+                      presets:
+                        MS:
+                          description: Medium Shot
+                          thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/c1c1c529-28a3-51ce-b028-140c1c79a3ad___c1c1c529-28a3-51ce-b028-140c1c79a3ad___ms_update.webp
+                    2274460d-a8a4-5f6c-9f32-02dceb029c58:
+                      id: 2274460d-a8a4-5f6c-9f32-02dceb029c58
+                      name: Brianna Hill
+                      thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/2274460d-a8a4-5f6c-9f32-02dceb029c58___2274460d-a8a4-5f6c-9f32-02dceb029c58.webp
+                      backgroundUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/white_bg.png
+                      suggestedVoices:
+                      - AVA_M__004
+                      - en-IN-NeerjaNeural__002
+                      presets:
+                        MS:
+                          description: Medium Shot
+                          thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/2274460d-a8a4-5f6c-9f32-02dceb029c58___2274460d-a8a4-5f6c-9f32-02dceb029c58___ms_update.webp
+      deprecated: false
+  /personalized-brand.api.rephrase.ai/v2/campaign/create:
+    post:
+      tags:
+      - Video
+      summary: Create a new video
+      description: "\n## Introduction\n\nThe request primarily consists of `scenes`. Each scene is an independent segment of the video.\nA scene consists of a list of elements which are it's basic building blocks.\nEach element contains an `asset` and a `style`.\nNote: The total video duration can't exceed 900 seconds.\n\n---\n\n### Assets\n\n<details>\n<summary><strong>Click to expand</strong></summary>\n\nWe have the following asset types:\n* [Spokesperson](#spokesperson-asset)\n* [Text](#text-asset)\n* [Image](#image-asset)\n* [Video](#video-asset)\n* [Shape](#shape-asset)\n\n#### Spokesperson Asset\n| Parameter Name  | Description   | Data Type  |\n| :-------------: |:-------------:| :-----:|\n**kind** | `Spokesperson` | string\n**spokesperson_video** | [SpokespersonVideo](#spokespersonvideo) | object\n\n#### Text Asset\n| Parameter | Description | Data Type | Example |\n|-----------|-------------|-----------|---------|\n| kind      | `Text` | String |\n| text      | The actual text\
+        \ content | String | `Title Text` |\n| textStyle | The styling for the text | Object | `{\"fontColor\": \"#631111\", \"fontSize\": \"4em\", \"textDecorationColor\": \"#631111\", \"align\": \"left\"}` |\n\n#### Image Asset\n| Parameter | Description | Data Type | Example |\n|-----------|-------------|-----------|---------|\n| kind      | `Image` | String |\n| use       | The purpose of the asset. Set to \"Background\" to use the image as a background. | String or null | `Background` or `null` |\n| url       | The URL of the asset | String    | `https://res.cloudinary.com/rephraseai/image/upload/v1673019001/music_uploads/kcblw77nviultytkcpht.png` |\nConstraints:\n- Maximum File size: For Image - 10 MB, For Background Image - 15 MB\n- Accepted File Type: .jpg, .png, .gif, .svg, .webp\n\n#### Video Asset\n| Parameter | Description | Data Type | Example |\n|-----------|-------------|-----------|---------|\n| kind      | `Video` | String |\n| use       | The purpose of the asset. Set to\
+        \ \"Background\" to use the video as a background. | String or null | `Background` or `null` |\n| url       | The URL of the asset | String    | `https://res.cloudinary.com/rephraseai/video/upload/v1673019001/music_uploads/kcblw77nviultytkcpht.mp4` |\nConstraints:\n- Maximum File size: For Video - 100 MB, For Background Video - 100 MB\n- Accepted File Type: .mp4, .webm\n\n#### Shape Asset\n| Parameter | Description | Data Type | Example |\n|-----------|-------------|-----------|---------|\n| kind      | `Shape` | String |\n| url       | The URL of the asset | String    | `https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Arrow%20circle.svg` |\n| shapeStyle | The styling for the shape | Object | `{\"fill\": \"#631111\", \"strokeWidth\": 2, \"stroke\": \"#070708\"}` |\nConstraints:\n- Maximum File size: For Shape - 5 MB\n- Accepted File Type: .svg\n\n__________\n\n\n### Components\n\n#### SpokespersonVideo\n| Parameter Name  | Description   | Data Type  |\n\
+        | :-------------: |:-------------:| :-----:|\n| model      | Name of the actor to use for generating the video | string |\n| voiceId      | Unique identifier for the selected voice to be used in the video | string |\n| output_params      | [SpokespersonVideo.OutputParams](#spokespersonvideooutputparams)     |   object   |\n| transcript | The transcript of the message the spokesperson will deliver | string |\n| transcript_type | The type of transcript provided, currently supports `ssml_limited`, `ssml_standard`, `text` | string |\n\n#### SpokespersonVideo.OutputParams\n| Parameter Name  | Description   | Data Type  |\n| :-------------: |:-------------:| :-----:|\n| video | [SpokespersonVideo.OutputParams.Video](#spokespersonvideooutputparamsvideo) | object\n\n#### SpokespersonVideo.OutputParams.Video\n| Parameter Name | Description | Data Type | Example |\n| :------------: |:-----------:| :--------:| :------:|\n| crop      | Preset crop size for the spokesperson | Object    | `{\"\
+        preset\": \"MS\"}` |\n| resolution | Desired video resolution | Object | `{\"height\": 720, \"width\": 1280}` |\n| background | Background settings for the video | Object | `{\"alpha\": 0}` |\n\n</details>\n\n---\n\n\n### Styles\n\n<details>\n<summary><strong>Click to expand</strong></summary>\n\n\nDifferent elements have different possible styles. Parameters for style depends on the asset type associated with the element.\n\n### Background Image\n| Parameter | Description | Data Type | Example |\n|-----------|-------------|-----------|---------|\n| height    | The height of the element, as a percentage of its container | String | `100%` |\n| width     | The width of the element, as a percentage of its container | String | `100%` |\n| position  | The positioning of the element relative to its container | String | `absolute` |\n| zIndex    | The z-index of the element, which determines its stacking order | Integer | `1` |\n\n### Image\n| Parameter | Description | Data Type | Example\
+        \ |\n|-----------|-------------|-----------|---------|\n| height    | The height of the element | String | `43.28756938625066em` |\n| width     | The width of the element | String | `43.28756938625066em` |\n| bottom    | The distance between the bottom of the element and the bottom of its container | String | `6.458198131217985em` |\n| left      | The distance between the left of the element and the left of its container | String | `54.50089154637617em` |\n| zIndex    | The z-index of the element, which determines its stacking order | Integer | `10` |\n| position  | The positioning of the element relative to its container | String | `absolute` |\n\n\n### Text\n| Parameter Name       | Description                                | Data Type | Example                           |\n|----------------------|--------------------------------------------|-----------|----------------------------------|\n| variant              | Type of text variant                       | string    | `subheading`\
+        \                     |\n| fontSize             | Font size in em                             | string    | `5em`            |\n| fontFamily           | Font family name                            | string    | `Arial`, `Roboto`, `Calibri`, `DM Sans`, `Raleway`, `Times New Roman`                     |\n| color                | Font color                                 | string    | `#FFFFFF`                        |\n| position             | Position of text in the asset              | string    | `absolute`                       |\n| zIndex               | Layer order of the text                     | integer   | `15`                              |\n| align                | Text alignment                              | string    | `right`                          |\n| height               | Height of the text element                  | string    | `7em`            |\n| width                | Width of the text element                   | string    | `33em`            |\n| bottom\
+        \               | Distance of the text element from the bottom | string    | `34em`           |\n| left                 | Distance of the text element from the left   | string    | `60em`            |\n| fontColor            | Font color in RGB format                    | string    | `#000000`                        |\n| textDecorationColor | Text decoration color in RGB format         | string    | `#000000`                        |\n\n\n\n### Shape\n| Parameter Name       | Description                                | Data Type | Example                           |\n|----------------------|--------------------------------------------|-----------|----------------------------------|\n| position             | Position of shape in the asset              | string    | `absolute`                       |\n| zIndex               | Layer order of the shape                     | integer   | `15`                              |\n| height               | Height of the shape element        \
+        \          | string    | `7em`            |\n| width                | Width of the shape element                   | string    | `33em`            |\n| bottom               | Distance of the shape element from the bottom | string    | `34em`           |\n| left                 | Distance of the shape element from the left   | string    | `60em`            |\n\n\n\n</details>\n\n---\n\n### Animation\n<details>\n<summary><strong>Click to expand</strong></summary>\n\nThe animation field includes the following properties:\n\n- `type`: The type of the animation. Example: \"start\".\n- `duration`: The duration of the animation in seconds. Example: 1.5.\n- `offset`: The time when the animation starts playing in seconds (floating point). Example: 0.2.\n- `presets`: An array of animation presets. Example: [\"fade_in\", \"fade_out\"].\n- `fields`: An array of objects representing the different animation properties. You can use fields to create a custom animation instead of using a preset.\n\
+        \    * `name`: The name of the animation property. Examples: \"left\", \"right\", \"top\", \"bottom\", \"rotate\", \"scale\".\n    * `startValue`: The start value of the animation (between 0 and 1).\n    * `endValue`: The end value of the animation (between 0 and 1).\n- `timingFunction`: An object representing the timing function of the animation.\n    * `type`: The type of the timing function. Examples: \"linear\", \"quad\", \"cubic\", \"cubic-bezier\", \"circle\", \"sin\", \"exp\", \"bounce\", \"elastic\".\n    * `params`: An array of parameters for the timing function.\n\n\n```json\n\"animations\": [\n  {\n    \"type\": \"start\",\n    \"duration\": 1.5,\n    \"offset\": 0.2,\n    \"fields\": [\n      {\n        \"name\": \"rotate\",\n        \"startValue\": 0,\n        \"endValue\": 1\n      }\n    ],\n    \"timingFunction\": {\n      \"type\": \"linear\"\n    }\n  }\n]\n```\n\n\n</details>\n\n### Scene Transitions\n<details>\n<summary><strong>Click to expand</strong></summary>\n\
+        \nThe scene transition field includes the following properties:\n\n- `duration`: The duration of the scene transition in seconds. Example: 1.5.\n- `preset`: The type of scene transition.\n    * `name`: The name of the scene transition. Examples: \"slide\", \"push\", \"dissolve\".\n    * `params`: An object representing the parameters for the scene transition.\n- `timingFunction`: An object representing the timing function of the scene transition.\n    * `type`: The type of the timing function. Examples: \"linear\", \"cubic\", \"cubic-bezier\".\n    * `params`: An array of parameters for the timing function.\n\n\n```json\n\"sceneTransitions\": [\n  {\n    \"startScene\": 0,\n    \"endScene\": 1,\n    \"transition\": {\n        \"duration\": 1.5,\n        \"preset\": {\n            \"name\": \"slide\",\n            \"params\": {\n                \"motionBlur\": \"1.5px\",\n                \"direction\": \"left\"\n            }\n        }\n        \"timingFunction\": {\n           \
+        \ \"type\": \"linear\"\n        }\n    }\n  }\n]\n```\n\n</details>\n\n### Subtitles\n<details>\n<summary><strong>Click to expand</strong></summary>\n\nThe subtitles field includes the following properties:\n- `hardcode_subtitles`: A boolean value indicating whether to embed subtitles within the video.\n- `generate_srt_file`: A boolean value indicating whether to generate an SRT file for the video.\n- `create_captions` (**to be deprecated**, please use `hardcode_subtitles` instead): A boolean value indicating whether to embed subtitles within the video.\n\n</details>\n\n---\n\n### Background Music\n<details>\n<summary><strong>Click to expand</strong></summary>\n\nThe background music field includes the following properties:\n- `asset`: The background music asset.\n    - `url`: The URL of the asset. Example: \"https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/panel_defaults/music/acoustic-motivation-11290.mp3\"\n- `mediaElProps`: The media element properties.\n    - `volume`:\
+        \ The volume of the audio. Example: 0.5.\n\nConstraints:\n- Maximum File size: For Background Music - 30 MB\n- Accepted File Type: .m4a, .mp3, .opus, .flac, .wav, .aac, .oga\n</details>\n\n---\n\n## Examples\nUse the `Examples` dropdown in the `REQUEST` code box on this page to view the examples\n"
+      operationId: create-video
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorize the request using your access token.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: Bearer <access_token>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimplifiedCreateCampaignRequest'
+            examples:
+              simple_video_in_hindi:
+                summary: Simple Video in Hindi
+                value:
+                  videoDimension:
+                    height: 1920
+                    width: 1080
+                  scenes:
+                  - elements:
+                    - style:
+                        height: 100%
+                        position: absolute
+                        width: 100%
+                        zIndex: 1
+                      asset:
+                        kind: Image
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/panel_defaults/background/image/white.webp
+                        use: Background
+                    - style:
+                        bottom: -31.46944444444442em
+                        height: 210.2472222222222em
+                        left: -108.21111111111111em
+                        objectFit: contain
+                        position: absolute
+                        width: 318.17314814814813em
+                        zIndex: 4
+                      asset:
+                        kind: Spokesperson
+                        spokespersonVideo:
+                          transcript: नमस्ते, मेरा नाम प्रिया है। मुझे पढ़ाई, ट्रेकिंग, और पियानो बजाना पसंद है। मैं आप सभी के साथ काम करने के लिए उत्साहित हूँ।
+                          voiceId: hi-IN-SwaraNeural__002
+                          model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                          transcript_type: text
+                          modelPreset: MS
+                          output_params:
+                            video:
+                              background:
+                                alpha: 0
+                              resolution:
+                                height: 720
+                                width: 1280
+                  title: Portrait Video
+                  name: Portrait Video
+              simple_video_in_english:
+                summary: Simple Video in English
+                value:
+                  videoDimension:
+                    height: 1920
+                    width: 1080
+                  scenes:
+                  - elements:
+                    - style:
+                        height: 100%
+                        position: absolute
+                        width: 100%
+                        zIndex: 1
+                      asset:
+                        kind: Image
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/panel_defaults/background/image/white.webp
+                        use: Background
+                    - style:
+                        bottom: -31.46944444444442em
+                        height: 210.2472222222222em
+                        left: -108.21111111111111em
+                        objectFit: contain
+                        position: absolute
+                        width: 318.17314814814813em
+                        zIndex: 4
+                      asset:
+                        kind: Spokesperson
+                        spokespersonVideo:
+                          transcript: Hello, my name is Jane. I enjoy reading, hiking, and playing the piano. I am excited to be here and look forward to work with you all.
+                          voiceId: en-US-JennyMultilingualNeural__002
+                          model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                          transcript_type: text
+                          modelPreset: MS
+                          output_params:
+                            video:
+                              background:
+                                alpha: 0
+                              resolution:
+                                height: 720
+                                width: 1280
+                  title: Portrait Video
+                  name: Portrait Video
+              mobile_phone_product_video:
+                summary: Product Video in English
+                value:
+                  videoDimension:
+                    height: 1080
+                    width: 1920
+                  scenes:
+                  - elements:
+                    - style:
+                        position: absolute
+                        zIndex: 6
+                        bottom: 1.9441666666666655em
+                        objectFit: cover
+                        objectPosition: bottom
+                        height: 22.222500000000004em
+                        width: 22.222500000000004em
+                        backgroundColor: '#FFEDCC'
+                        borderRadius: 18.749192708333336em
+                        left: 7.09921875em
+                        shouldUpdateBorderRadius: true
+                        useMask: true
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Spokesperson
+                        spokespersonVideo:
+                          transcript: <speak> <break time='0.5s'/> Introducing the OnePlus 5, a sleek mobile device in Slate Grey. Powered by the Qualcomm MSM8998 Snapdragon 835 processor, this <sub alias="smart phone">smartphone</sub> offers fast and efficient performance.</speak>
+                          voiceId: en-US-JennyMultilingualNeural__002
+                          model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                          transcript_type: ssml_standard
+                          modelPreset: MCU
+                          windowSize: circular
+                    - style:
+                        height: 100%
+                        width: 100%
+                        position: absolute
+                        zIndex: 1
+                        bottom: 0em
+                        left: 0em
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1684480902/music_uploads/z48bmyfwyu7rz5kwyaml.png
+                        use: Background
+                    - style:
+                        height: 50.169270833333336em
+                        width: 35.98552083333334em
+                        bottom: 3.6328125em
+                        left: 53.27395833333333em
+                        zIndex: 3
+                        position: absolute
+                        objectFit: contain
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Image
+                        url: https://prod-rephrase-media-lib.s3.us-east-1.amazonaws.com/user_media/677/0ff0019f-8c4b-4cee-a43d-cac7083e8302.jpg
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 0.2
+                        presets:
+                        - slide_in_right
+                        timingFunction:
+                          type: elastic
+                    - style:
+                        variant: subheading
+                        left: 6.587031250000001em
+                        bottom: 35.250635416666675em
+                        height: 9.749375em
+                        width: 47.989583333333336em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        zIndex: 4
+                        transform: rotate(0deg)
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: OnePlus 5
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 6.5em
+                          textDecorationColor: '#00008b'
+                          fontFamily: Raleway
+                          fontWeight: bold
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 0.2
+                        presets:
+                        - slide_in_left
+                        timingFunction:
+                          type: elastic
+                    - style:
+                        variant: body
+                        left: 69.44010416666667em
+                        bottom: 0.5208333333333334em
+                        height: 2.1875em
+                        width: 29.739583333333336em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        overflowWrap: break-word
+                        zIndex: 7
+                        whiteSpace: pre-wrap
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Text
+                        text: 'This is a machine generated automated video
+
+                          '
+                        textStyle:
+                          fontColor: '#565959'
+                          fontSize: 24px
+                          fontFamily: Raleway
+                          textDecorationColor: '#565959'
+                      animations:
+                      - type: start
+                        duration: 1
+                        offset: 3
+                        presets:
+                        - fade_out
+                        timingFunction:
+                          type: elastic
+                  - elements:
+                    - style:
+                        position: absolute
+                        zIndex: 20
+                        bottom: -0.4em
+                        objectFit: contain
+                        height: 48.7394em
+                        width: 65.1214em
+                        left: -13.7451em
+                      asset:
+                        kind: Spokesperson
+                        spokespersonVideo:
+                          transcript: <speak>The product offers 8 <marker id='ram'/>  GB RAM for enhanced performance, runs on Android v7.1.1 <marker id='os'/>  Nougat operating system, has a 3300 <marker id='battery'/>  mAh battery for long-lasting usage, and supports <marker id='connectivity'/>  4G connectivity. It also provides a spacious 128 <marker id='storage'/>  GB storage for ample data storage.</speak>
+                          voiceId: en-US-JennyMultilingualNeural__002
+                          model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                          transcript_type: ssml_standard
+                          modelPreset: MS
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 0.2
+                        presets:
+                        - slide_in_bottom
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                    - style:
+                        height: 100%
+                        width: 100%
+                        position: absolute
+                        zIndex: 1
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1684480902/music_uploads/z48bmyfwyu7rz5kwyaml.png
+                        use: Background
+                    - style:
+                        height: 32.81333333333333em
+                        width: 23.08026041666667em
+                        bottom: 10.10333333333333em
+                        left: 52.01869791666667em
+                        zIndex: 8
+                        position: absolute
+                        objectFit: contain
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Image
+                        url: https://prod-rephrase-media-lib.s3.us-east-1.amazonaws.com/user_media/677/e84d1297-304e-4a01-91e7-e68624d620bf.jpg
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 0.2
+                        presets:
+                        - slide_in_bottom
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 27.512083333333333em
+                        bottom: 49.0625em
+                        height: 4.791666666666667em
+                        width: 68.38541666666667em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: center
+                        zIndex: 22
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: Technical Specifications
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 96px
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          fontFamily: Raleway
+                          align: center
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 0.2
+                        presets:
+                        - slide_in_bottom
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 29.418385416666666em
+                        bottom: 33.69791666666667em
+                        height: 2.8125em
+                        width: 20.625em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: right
+                        zIndex: 14
+                        transform: rotate(0deg)
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: 4G
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 1.8888888888888888em
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          align: right
+                          fontFamily: Raleway
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 14.2125
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: connectivity
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 29.950729166666665em
+                        bottom: 23.697916666666668em
+                        height: 2.8125em
+                        width: 20.208333333333336em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: right
+                        zIndex: 15
+                        transform: rotate(0deg)
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: 128 GB Storage
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 1.8888888888888888em
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          align: right
+                          fontFamily: Raleway
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 18.7
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: storage
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 76.890625em
+                        bottom: 23.697916666666668em
+                        height: 2.8125em
+                        width: 18.489583333333336em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        zIndex: 17
+                        transform: rotate(0deg)
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: Android v7.1.1
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 1.8888888888888888em
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          align: left
+                          fontFamily: Raleway
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 6.125
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: os
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 77.08385416666667em
+                        bottom: 33.69791666666667em
+                        height: 2.8125em
+                        width: 27.291666666666668em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        zIndex: 18
+                        transform: rotate(0deg)
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: 8 GB RAM
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 1.8888888888888888em
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          align: left
+                          fontFamily: Raleway
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 1.35
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: ram
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        width: 5.416666666666667em
+                        left: 44.708333333333336em
+                        bottom: 36.51041666666667em
+                        position: absolute
+                        zIndex: 14
+                        height: 5.416666666666667em
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 0
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 14.2125
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: connectivity
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        width: 5.416666666666667em
+                        left: 44.724895833333335em
+                        bottom: 26.510416666666668em
+                        position: absolute
+                        zIndex: 23
+                        height: 5.416666666666667em
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 0
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 18.7
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: storage
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        width: 5.416666666666667em
+                        left: 76.92708333333334em
+                        bottom: 36.51041666666667em
+                        position: absolute
+                        zIndex: 23
+                        height: 5.416666666666667em
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 0
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 1.35
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: ram
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        width: 5.416666666666667em
+                        left: 76.91145833333334em
+                        bottom: 26.510416666666668em
+                        position: absolute
+                        zIndex: 23
+                        height: 5.416666666666667em
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 0
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 6.125
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: os
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        width: 5.416666666666667em
+                        left: 76.9265625em
+                        bottom: 16.770833333333336em
+                        position: absolute
+                        zIndex: 23
+                        height: 5.416666666666667em
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 0
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 10.225
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: battery
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 3.229166666666667em
+                        width: 3.229166666666667em
+                        bottom: 37.60416666666667em
+                        left: 45.83854166666667em
+                        zIndex: 18
+                        position: absolute
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1686824142/music_uploads/sjl9z6zbghzxvcrju8je.png
+                        title: StorageIcon
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 14.2125
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: connectivity
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 3.6458333333333335em
+                        width: 3.1770833333333335em
+                        bottom: 37.395833333333336em
+                        left: 78.07604166666667em
+                        zIndex: 25
+                        position: absolute
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1686823826/music_uploads/nvzwba14uf6ktanzixo6.png
+                        title: battery_icon
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 1.35
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: ram
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 3.385416666666667em
+                        width: 3.1770833333333335em
+                        bottom: 27.5em
+                        left: 78.07291666666667em
+                        zIndex: 26
+                        position: absolute
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1687284738/music_uploads/lzjmrqwyv5ypqlo3vxfu.png
+                        title: connectivity_icon
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 6.125
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: os
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 2.916666666666667em
+                        width: 3.229166666666667em
+                        bottom: 27.708333333333336em
+                        left: 45.76453125em
+                        zIndex: 27
+                        position: absolute
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1686824182/music_uploads/tivkqee665vbtpyelmog.png
+                        title: storage_icon
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 18.7
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: storage
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 3.541666666666667em
+                        width: 2.916666666666667em
+                        bottom: 17.708333333333336em
+                        left: 78.203125em
+                        zIndex: 29
+                        position: absolute
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1686824006/music_uploads/ee0yfya6gb5t8kgmddrc.png
+                        title: waterResistant_icon
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 10.225
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: battery
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 76.91666666666667em
+                        bottom: 13.854166666666668em
+                        height: 2.8125em
+                        width: 18.489583333333336em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        zIndex: 17
+                        transform: rotate(0deg)
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: 3300 mAh
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 1.8888888888888888em
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          align: left
+                          fontFamily: Raleway
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 10.225
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                        marker_id: battery
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                  - elements:
+                    - style:
+                        position: absolute
+                        zIndex: 19
+                        bottom: -0.4em
+                        objectFit: contain
+                        height: 48.7394em
+                        width: 65.1214em
+                        left: 48em
+                      asset:
+                        kind: Spokesperson
+                        spokespersonVideo:
+                          transcript: <speak> <marker id='ft_anim_3'/> Featuring dual SIM functionality <marker id='ft_anim_2'/> , proximity sensor, email capabilities <marker id='ft_anim_1'/> , accelerometer, GPS, and a <marker id='ft_anim_0'/>  front-mounted fingerprint sensor, this product offers a range of special features to enhance user experience.</speak>
+                          voiceId: en-US-JennyMultilingualNeural__002
+                          model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                          transcript_type: ssml_standard
+                          modelPreset: MS
+                          stages: {}
+                    - style:
+                        height: 100%
+                        width: 100%
+                        position: absolute
+                        zIndex: 1
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1684480902/music_uploads/z48bmyfwyu7rz5kwyaml.png
+                        use: Background
+                        title: WhiteBackground_withSmile
+                    - style:
+                        variant: subheading
+                        left: 16em
+                        bottom: 38.177083333333336em
+                        height: 5em
+                        width: 52.96875em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        overflowWrap: break-word
+                        zIndex: 6
+                        whiteSpace: pre-wrap
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Text
+                        text: Dual SIM
+                        textStyle:
+                          fontColor: '#555555'
+                          fontSize: 3.3333333333333335em
+                          fontFamily: Raleway
+                          textDecorationColor: '#000000'
+                          align: left
+                          fontWeight: bold
+                          fontStyle: null
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 0.5
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        variant: subheading
+                        left: 5em
+                        bottom: 49.0625em
+                        height: 4.791666666666667em
+                        width: 68.38541666666667em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: center
+                        zIndex: 22
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: Key Features
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 96px
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          fontFamily: Raleway
+                          align: center
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0.5
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        variant: subheading
+                        left: 16em
+                        bottom: 27.1875em
+                        height: 5em
+                        width: 53.020833333333336em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        overflowWrap: break-word
+                        zIndex: 6
+                        whiteSpace: pre-wrap
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Text
+                        text: Proximity
+                        textStyle:
+                          fontColor: '#555555'
+                          fontSize: 3.3333333333333335em
+                          fontFamily: Raleway
+                          textDecorationColor: '#000000'
+                          align: left
+                          fontWeight: bold
+                          fontStyle: null
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 2.025
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                        name: Slide In Right
+                        marker_id: ft_anim_2
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        variant: subheading
+                        left: 16em
+                        bottom: 16.40625em
+                        height: 5em
+                        width: 52.96875em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        overflowWrap: break-word
+                        zIndex: 6
+                        whiteSpace: pre-wrap
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Text
+                        text: Accelerometer
+                        textStyle:
+                          fontColor: '#555555'
+                          fontSize: 3.3333333333333335em
+                          fontFamily: Raleway
+                          textDecorationColor: '#000000'
+                          align: left
+                          fontWeight: bold
+                          fontStyle: null
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 5.0125
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                        name: Slide In Right
+                        marker_id: ft_anim_1
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        width: 60px
+                        left: 10em
+                        bottom: 40em
+                        position: absolute
+                        zIndex: 47
+                        height: 60px
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Rounded%20Star.svg
+                        firstChildAttributes:
+                          strokeWidth: 2
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 0.5
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                        marker_id: ft_anim_3
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        width: 60px
+                        left: 10em
+                        bottom: 29em
+                        position: absolute
+                        zIndex: 47
+                        height: 60px
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Rounded%20Star.svg
+                        firstChildAttributes:
+                          strokeWidth: 2
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 2.025
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                        name: Slide In Right
+                        marker_id: ft_anim_2
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        width: 60px
+                        left: 10em
+                        bottom: 18em
+                        position: absolute
+                        zIndex: 47
+                        height: 60px
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Rounded%20Star.svg
+                        firstChildAttributes:
+                          strokeWidth: 2
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 5.0125
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                        name: Slide In Right
+                        marker_id: ft_anim_1
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        width: 60px
+                        left: 10em
+                        bottom: 7em
+                        position: absolute
+                        zIndex: 47
+                        height: 60px
+                        transform: rotate(0deg)
+                        objectFit: contain
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/elements/shapesV3/Rounded%20Star.svg
+                        firstChildAttributes:
+                          strokeWidth: 2
+                          fill: rgba(255,237,204,1)
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 7.7125
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                        name: Slide In Right
+                        marker_id: ft_anim_0
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                    - style:
+                        variant: subheading
+                        left: 16em
+                        bottom: 5.3125em
+                        height: 5em
+                        width: 52.96875em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        overflowWrap: break-word
+                        zIndex: 6
+                        whiteSpace: pre-wrap
+                        transform: rotate(0deg)
+                      asset:
+                        kind: Text
+                        text: Fingerprint (Front-Mounted)
+                        textStyle:
+                          fontColor: '#555555'
+                          fontSize: 3.3333333333333335em
+                          fontFamily: Raleway
+                          textDecorationColor: '#000000'
+                          align: left
+                          fontWeight: bold
+                          fontStyle: null
+                      animations:
+                      - type: start
+                        duration: 1.5
+                        offset: 7.7125
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: linear
+                        name: Slide In Right
+                        marker_id: ft_anim_0
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: cubic-bezier
+                          params:
+                          - 0.42
+                          - 0
+                          - 1
+                          - 1
+                  - elements:
+                    - style:
+                        position: absolute
+                        zIndex: 19
+                        bottom: -0.4em
+                        objectFit: contain
+                        height: 48.7394em
+                        width: 65.1214em
+                        left: -13.7451em
+                      asset:
+                        kind: Spokesperson
+                        spokespersonVideo:
+                          transcript: <speak>The product offers a display with 401 ppi pixel density and 1080 x 1920 pixels resolution. It also includes face detection and an Optic AMOL E D capacitive touchscreen.</speak>
+                          voiceId: en-US-JennyMultilingualNeural__002
+                          model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                          transcript_type: ssml_standard
+                          modelPreset: MS
+                    - style:
+                        height: 100%
+                        width: 100%
+                        position: absolute
+                        zIndex: 1
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1684480902/music_uploads/z48bmyfwyu7rz5kwyaml.png
+                        use: Background
+                    - style:
+                        height: 28.4359em
+                        width: 62.374em
+                        bottom: 6.98016em
+                        left: 36.6753em
+                        zIndex: 20
+                        position: absolute
+                        objectFit: contain
+                      asset:
+                        kind: Image
+                        url: https://prod-rephrase-media-lib.s3.us-east-1.amazonaws.com/user_media/677/554991df-ecce-4da2-a8e2-5437b85c59d8.jpg
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0.8
+                        presets:
+                        - slide_in_bottom
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 27.512083333333333em
+                        bottom: 49.0625em
+                        height: 5.3328645833333335em
+                        width: 68.38541666666667em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: center
+                        zIndex: 22
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: 'Display: A Closer Look'
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 3.5555em
+                          textDecorationColor: '#00008b'
+                          fontWeight: bold
+                          align: center
+                          fontFamily: Raleway
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0
+                        presets:
+                        - slide_in_top
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                    - style:
+                        variant: subheading
+                        left: 30.36953125em
+                        bottom: 39.32291666666667em
+                        height: 6.354166666666667em
+                        width: 68.22916666666667em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: center
+                        zIndex: 23
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: "1080 x 1920 pixels resolution | 401 ppi pixel density |\n face detection"
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 2.2222222222222223em
+                          textDecorationColor: '#00008b'
+                          fontFamily: Raleway
+                          align: center
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0
+                        presets:
+                        - slide_in_top
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                      - type: end
+                        duration: 1
+                        offset: 0
+                        presets:
+                        - slide_out_right
+                        - fade_out
+                        timingFunction:
+                          type: linear
+                  - elements:
+                    - style:
+                        position: absolute
+                        zIndex: 30
+                        bottom: -2.1875em
+                        objectFit: contain
+                        height: 30.729166666666668em
+                        width: 38.125em
+                        left: 4.024885416666667em
+                      asset:
+                        kind: Spokesperson
+                        spokespersonVideo:
+                          transcript: <speak>For further information visit the product link. </speak>
+                          voiceId: en-US-JennyMultilingualNeural__002
+                          model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                          transcript_type: ssml_standard
+                          modelPreset: MS
+                          isVoiceOver: true
+                    - style:
+                        height: 10em
+                        width: 10em
+                        left: 82.83072916666667em
+                        bottom: -6.354166666666667em
+                        position: absolute
+                        zIndex: 32
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/shapes/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 2
+                          fill: '#ffc354'
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0
+                        presets:
+                        - slide_in_right
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 14.263489583333333em
+                        width: 14.263489583333333em
+                        left: 6.26453125em
+                        bottom: -7.8576041666666665em
+                        position: absolute
+                        zIndex: 33
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/shapes/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 3
+                          fill: '#eea5ab'
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0
+                        presets:
+                        - slide_in_bottom
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 6.988125em
+                        width: 8.798020833333334em
+                        left: -5.846875000000001em
+                        bottom: 41.605625em
+                        position: absolute
+                        zIndex: 34
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/shapes/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 2
+                          fill: '#ffc354'
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0
+                        presets:
+                        - slide_in_left
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 10em
+                        width: 10em
+                        left: 93.55000000000001em
+                        bottom: 50.88541666666667em
+                        position: absolute
+                        zIndex: 35
+                      asset:
+                        kind: Shape
+                        url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/shapes/Circle.svg
+                        shapeStyle:
+                          strokeWidth: 2
+                          fill: '#eea5ab'
+                      animations:
+                      - type: start
+                        duration: 2
+                        offset: 0
+                        presets:
+                        - slide_in_top
+                        timingFunction:
+                          type: linear
+                    - style:
+                        height: 56.25em
+                        width: 100em
+                        position: absolute
+                        zIndex: 1
+                        bottom: 0.15625em
+                        left: -0.0000013541666666666667em
+                      asset:
+                        kind: Image
+                        url: https://res.cloudinary.com/rephraseai/image/upload/v1684480902/music_uploads/z48bmyfwyu7rz5kwyaml.png
+                        use: Background
+                        title: BackgroundImage
+                    - style:
+                        height: 11.61703125em
+                        width: 42.13541666666667em
+                        bottom: 23.903802083333332em
+                        left: 27.176927083333336em
+                        zIndex: 36
+                        position: absolute
+                      asset:
+                        kind: Image
+                        url: https://uploads-ssl.webflow.com/6307393e40826809fbf8dabe/630774c3ea503dff4acdd2c6_web_logo_c.png
+                        title: amazon_in
+                      animations:
+                      - type: start
+                        duration: 3
+                        offset: 0
+                        presets:
+                        - slide_in_left
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                    - style:
+                        variant: subheading
+                        left: 31em
+                        bottom: 5.71875em
+                        height: 2.5520833333333335em
+                        width: 42.395833333333336em
+                        color: '#FFFFFF'
+                        position: absolute
+                        align: left
+                        overflowWrap: break-word
+                        zIndex: 37
+                        whiteSpace: pre-wrap
+                      asset:
+                        kind: Text
+                        text: 'For further information visit the product link.
+
+                          '
+                        textStyle:
+                          fontColor: '#232F3E'
+                          fontSize: 1.7777777777777777em
+                          fontFamily: Raleway
+                          textDecorationColor: '#000000'
+                      animations:
+                      - type: start
+                        duration: 3
+                        offset: 0
+                        presets:
+                        - slide_in_right
+                        - fade_in
+                        timingFunction:
+                          type: elastic
+                  sceneTransitions:
+                  - transition:
+                      preset:
+                        name: roll
+                        params:
+                          rollAngle: 30
+                          motionBlur: 0px
+                          direction: clockwise
+                      timingFunction:
+                        type: cubic-bezier
+                        params:
+                        - 0.83
+                        - 0
+                        - 0.17
+                        - 1
+                      duration: 1
+                    endScene: 0
+                  - transition:
+                      preset:
+                        name: push
+                        params:
+                          direction: top
+                      timingFunction:
+                        type: linear
+                      duration: 1
+                    startScene: 0
+                    endScene: 1
+                  - transition:
+                      preset:
+                        name: circleWipe
+                        params:
+                          direction: insideOut
+                      timingFunction:
+                        type: linear
+                      duration: 1
+                    startScene: 1
+                    endScene: 2
+                  - transition:
+                      preset:
+                        name: lineWipe
+                        params:
+                          direction: left
+                      timingFunction:
+                        type: cubic-bezier
+                        params:
+                        - 0.12
+                        - 0.68
+                        - 0.75
+                        - 0.68
+                      duration: 1
+                    startScene: 2
+                    endScene: 3
+                  - transition:
+                      preset:
+                        name: zoom
+                        params:
+                          direction: zoomOut
+                      timingFunction:
+                        type: linear
+                      duration: 1
+                    startScene: 3
+                    endScene: 4
+                  - transition:
+                      preset:
+                        name: roll
+                        params:
+                          direction: anticlockwise
+                          rollAngle: 60
+                      timingFunction:
+                        type: linear
+                      duration: 1
+                    startScene: 4
+                  title: Landscape Video with multiple scenes
+                  name: Landscape Video with multiple scenes
+                  generate_srt_file: true
+                  backgroundMusic:
+                    asset:
+                      url: https://prod-rephrase-media-lib.s3.us-east-1.amazonaws.com/user_media/677/12b6e52f-8aee-44d9-94f2-b46ac61aa121.mp3
+                    mediaElProps:
+                      volume: 0.1
+        required: false
+      responses:
+        '200':
+          description: Create Video Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCampaignResponse'
+              example:
+                campaign_id: <campaign_id>
+                message: Campaign created successfully
+      deprecated: false
+  /personalized-brand.api.rephrase.ai/v2/campaign/{campaign_id}:
+    get:
+      tags:
+      - Video
+      summary: Get video details
+      description: '
+
+        Refer to [create video API](https://studio-rephrase-api.readme.io/reference/create-video) first if you haven''t already created a video.
+
+
+        This API returns the video status and video URL.
+
+        '
+      operationId: get-video
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorize the request using your access token.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: Bearer <access_token>
+      - name: campaign_id
+        in: path
+        description: Video ID
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: <campaign_id>
+      responses:
+        '200':
+          description: Get Video Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResponse'
+      deprecated: false
+  /personalized-brand.api.rephrase.ai/v2/campaign/{campaign_id}/export:
+    post:
+      tags:
+      - Video
+      summary: Export video
+      description: '
+
+        Refer to [create video API](https://studio-rephrase-api.readme.io/reference/create-video) first if you haven''t already created a video
+
+
+        This API generates your video.
+
+        '
+      operationId: export-video
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorize the request using your access token.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: Bearer <access_token>
+      - name: campaign_id
+        in: path
+        description: Video ID
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: <campaign_id>
+      responses:
+        '200':
+          description: Export Video Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportCampaignResponse'
+              example:
+                details: Campaign scheduled successfully
+                credits_left: <credits left>
+      deprecated: false
+  /personalized-brand.api.rephrase.ai/v2/voices:
+    get:
+      tags:
+      - Voice
+      summary: Get all supported voices
+      description: '
+
+        This API returns list of all supported voices
+
+        '
+      operationId: get-voices
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorize the request using your access token.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: Bearer <access_token>
+      requestBody:
+        content:
+          application/json: {}
+        required: false
+      responses:
+        '200':
+          description: Response is a mapping of voice ids and corresponding voice properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimplifiedVoiceDict'
+              example:
+                en-US-JennyMultilingualNeural__002:
+                  voice_key: en-US-JennyMultilingualNeural__002
+                  language: en-US
+                  gender: female
+                  title: Jenny Multilingual
+                  voice_characteristics:
+                  - age: Young Adult
+                    tone: General
+                    speed: Normal
+                  use_cases: []
+                  captions_supported: true
+                  markers_supported: true
+                  sample_link: https://hosted-rephraseai-videos.s3.us-east-1.amazonaws.com/audio/2022f83f-9667-4a46-ba65-3ecf19bb3c85.wav
+      deprecated: false
+components:
+  schemas:
+    AuthRequest:
+      title: AuthRequest
+      type: object
+      properties:
+        grant_type:
+          title: Grant Type
+          type: string
+          default: refresh_token
+        client_id:
+          title: Client Id
+          type: string
+          default: <client_id>
+        scope:
+          title: Scope
+          type: string
+          default: all:diy
+        refresh_token:
+          title: Refresh Token
+          type: string
+          default: <refresh_token>
+    AuthResponse:
+      title: AuthResponse
+      type: object
+      properties:
+        access_token:
+          title: Access Token
+          type: string
+          default: <access_token>
+        scope:
+          title: Scope
+          type: string
+          default: read:rephrase.ai read:rephrase.ai offline_access
+        expires_in:
+          title: Expires In
+          type: integer
+          default: 86400
+        token_type:
+          title: Token Type
+          type: string
+          default: Bearer
+    Preset:
+      title: Preset
+      type: object
+      properties:
+        description:
+          title: Description
+          type: string
+        thumbnailUrl:
+          title: Thumbnailurl
+          type: string
+    SimplifiedActorVariant:
+      title: SimplifiedActorVariant
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        thumbnailUrl:
+          title: Thumbnailurl
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        backgroundUrl:
+          title: Backgroundurl
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        suggestedVoices:
+          title: Suggestedvoices
+          type: array
+          items: {}
+        presets:
+          title: Presets
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Preset'
+          description: Presets is a mapping of preset id and corresponding preset properties.
+    SimplifiedActor:
+      title: SimplifiedActor
+      required:
+      - gender
+      - variants
+      type: object
+      properties:
+        gender:
+          title: Gender
+          type: string
+        variants:
+          title: Variants
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SimplifiedActorVariant'
+    SimplifiedActorDict:
+      title: SimplifiedActorDict
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SimplifiedActor'
+    SimplifiedVoice:
+      title: SimplifiedVoice
+      required:
+      - title
+      - voice_key
+      - gender
+      - language
+      - captions_supported
+      - markers_supported
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+        voice_key:
+          title: Voice Key
+          type: string
+        gender:
+          title: Gender
+          type: string
+        language:
+          title: Language
+          type: string
+        sample_link:
+          title: Sample Link
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        voice_characteristics:
+          title: Voice Characteristics
+          type: array
+          items: {}
+        use_cases:
+          title: Use Cases
+          type: array
+          items: {}
+        captions_supported:
+          title: Captions Supported
+          type: boolean
+        markers_supported:
+          title: Markers Supported
+          type: boolean
+    SimplifiedVoiceDict:
+      title: SimplifiedVoiceDict
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SimplifiedVoice'
+    CreateCampaignResponse:
+      title: CreateCampaignResponse
+      required:
+      - campaign_id
+      - message
+      type: object
+      properties:
+        campaign_id:
+          title: Campaign Id
+          type: string
+        message:
+          title: Message
+          type: string
+    ResolutionOption:
+      title: ResolutionOption
+      type: object
+      properties:
+        height:
+          title: Height
+          type: integer
+        width:
+          title: Width
+          type: integer
+    TextAsset:
+      title: TextAsset
+      required:
+      - kind
+      - text
+      type: object
+      properties:
+        kind:
+          title: Kind
+          enum:
+          - Text
+          type: string
+        text:
+          title: Text
+          type: string
+          description: The actual text content.
+        textStyle:
+          title: Textstyle
+          type: object
+          description: The styling for the text.
+    ImageAsset:
+      title: ImageAsset
+      required:
+      - kind
+      - url
+      type: object
+      properties:
+        kind:
+          title: Kind
+          enum:
+          - Image
+          type: string
+        use:
+          title: Use
+          enum:
+          - Background
+          type: string
+          description: Set to 'Background' to use the image as a background.
+        url:
+          title: Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          description: The URL of the image.
+          format: uri
+    VideoAsset:
+      title: VideoAsset
+      required:
+      - kind
+      - url
+      type: object
+      properties:
+        kind:
+          title: Kind
+          enum:
+          - Video
+          type: string
+        use:
+          title: Use
+          enum:
+          - Background
+          type: string
+          description: Set to 'Background' to use the video as a background.
+        url:
+          title: Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          description: The URL of the video.
+          format: uri
+    ShapeAsset:
+      title: ShapeAsset
+      required:
+      - kind
+      - url
+      type: object
+      properties:
+        kind:
+          title: Kind
+          enum:
+          - Shape
+          type: string
+        url:
+          title: Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          description: The URL of the shape.
+          format: uri
+        shapeStyle:
+          title: Shapestyle
+          type: object
+          description: The styling for the shape.
+    TranscriptType:
+      title: TranscriptType
+      enum:
+      - TEXT
+      - SSML_STANDARD
+      - SSML_LIMITED
+      description: An enumeration.
+    BackgroundOption:
+      title: BackgroundOption
+      required:
+      - alpha
+      type: object
+      properties:
+        alpha:
+          title: Alpha
+          maximum: 1
+          minimum: 0
+          type: number
+          description: Alpha channel value for the background. Ranges from 0 to 1.
+    VideoOption:
+      title: VideoOption
+      type: object
+      properties:
+        resolution:
+          $ref: '#/components/schemas/ResolutionOption'
+        background:
+          $ref: '#/components/schemas/BackgroundOption'
+    OutputParams:
+      title: OutputParams
+      type: object
+      properties:
+        video:
+          $ref: '#/components/schemas/VideoOption'
+    SpokespersonVideoDetail:
+      title: SpokespersonVideoDetail
+      required:
+      - voiceId
+      - model
+      - transcript
+      type: object
+      properties:
+        voiceId:
+          title: Voiceid
+          type: string
+          description: Unique identifier for the selected voice.
+        model:
+          title: Model
+          type: string
+          description: Unique identifier for the actor to use for generating the video.
+        transcript:
+          title: Transcript
+          type: string
+          description: The transcript of the message the spokesperson will deliver.
+        modelPreset:
+          title: Modelpreset
+          type: string
+          description: Preset id to use for the actor. Default is 'MS'.
+        windowSize:
+          title: Windowsize
+          enum:
+          - transparent
+          - circular
+          type: string
+          description: Background type for the Spokesperson. Default is 'transparent'.
+        isVoiceOver:
+          title: Isvoiceover
+          type: boolean
+          description: True for voice only scenes.
+        transcript_type:
+          allOf:
+          - $ref: '#/components/schemas/TranscriptType'
+          description: Type of transcript. Default is 'SSML_LIMITED'.
+        output_params:
+          $ref: '#/components/schemas/OutputParams'
+    SpokespersonAsset:
+      title: SpokespersonAsset
+      required:
+      - kind
+      - spokespersonVideo
+      type: object
+      properties:
+        kind:
+          title: Kind
+          enum:
+          - Spokesperson
+          type: string
+        spokespersonVideo:
+          $ref: '#/components/schemas/SpokespersonVideoDetail'
+    AudioAsset:
+      title: AudioAsset
+      required:
+      - kind
+      - url
+      type: object
+      properties:
+        kind:
+          title: Kind
+          enum:
+          - Audio
+          type: string
+        url:
+          title: Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          description: The URL of the audio.
+          format: uri
+    EasingFunction:
+      title: EasingFunction
+      enum:
+      - linear
+      - quad
+      - cubic
+      - cubic-bezier
+      - circle
+      - sin
+      - exp
+      - bounce
+      - elastic
+      description: An enumeration.
+    TimingFunction:
+      title: TimingFunction
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/EasingFunction'
+          description: The type of the timing function.
+        params:
+          title: Params
+          type: array
+          items:
+            type: number
+          description: An array of parameters for the timing function.
+    AnimationPreset:
+      title: AnimationPreset
+      enum:
+      - fade_in
+      - fade_out
+      - scale_in
+      - scale_out
+      - slide_in_left
+      - slide_in_right
+      - slide_in_top
+      - slide_in_bottom
+      - slide_out_left
+      - slide_out_right
+      - slide_out_top
+      - slide_out_bottom
+      description: An enumeration.
+    AnimatableFields:
+      title: AnimatableFields
+      enum:
+      - opacity
+      - bottom
+      - left
+      - top
+      - right
+      - height
+      - width
+      - scale
+      - scaleX
+      - scaleY
+      - scaleZ
+      - rotate
+      - rotateX
+      - rotateY
+      - rotateZ
+      - skewX
+      - skewY
+      description: An enumeration.
+    AnimatableFieldValueRange:
+      title: AnimatableFieldValueRange
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/AnimatableFields'
+          description: The name of the animation property.
+        startValue:
+          title: Startvalue
+          type: number
+          description: The start value of the animation.
+        endValue:
+          title: Endvalue
+          type: number
+          description: The end value of the animation.
+    SimplifiedAnimation:
+      title: SimplifiedAnimation
+      required:
+      - type
+      - duration
+      - timingFunction
+      type: object
+      properties:
+        offset:
+          title: Offset
+          type: number
+          description: Offset in seconds to start the animation. Either Offset or Marker Id is required.
+        marker_id:
+          title: Marker Id
+          type: string
+          description: Marker id to start the animation. Markers can only be used with marker supported voices. Either Offset or Marker Id is required.
+        type:
+          title: Type
+          enum:
+          - start
+          - end
+          type: string
+          description: Specify if it's a start animation or an end animation.
+        duration:
+          title: Duration
+          type: number
+          description: The duration of the animation in seconds.
+        timingFunction:
+          title: Timingfunction
+          allOf:
+          - $ref: '#/components/schemas/TimingFunction'
+          description: Timing function to determine how the animation will progress.
+        presets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnimationPreset'
+          description: The type of animation.
+        fields:
+          title: Fields
+          type: array
+          items:
+            $ref: '#/components/schemas/AnimatableFieldValueRange'
+    SimplifiedElement:
+      title: SimplifiedElement
+      required:
+      - style
+      - asset
+      type: object
+      properties:
+        style:
+          title: Style
+          type: object
+          description: Style properties for the element.
+        asset:
+          title: Asset
+          oneOf:
+          - $ref: '#/components/schemas/TextAsset'
+          - $ref: '#/components/schemas/ImageAsset'
+          - $ref: '#/components/schemas/VideoAsset'
+          - $ref: '#/components/schemas/ShapeAsset'
+          - $ref: '#/components/schemas/SpokespersonAsset'
+          - $ref: '#/components/schemas/AudioAsset'
+          discriminator:
+            propertyName: kind
+            mapping:
+              Text: '#/components/schemas/TextAsset'
+              Image: '#/components/schemas/ImageAsset'
+              Video: '#/components/schemas/VideoAsset'
+              Shape: '#/components/schemas/ShapeAsset'
+              Spokesperson: '#/components/schemas/SpokespersonAsset'
+              Audio: '#/components/schemas/AudioAsset'
+        animations:
+          title: Animations
+          type: array
+          items:
+            $ref: '#/components/schemas/SimplifiedAnimation'
+    SimplifiedScene:
+      title: SimplifiedScene
+      required:
+      - elements
+      type: object
+      properties:
+        elements:
+          title: Elements
+          type: array
+          items:
+            $ref: '#/components/schemas/SimplifiedElement'
+          description: Elements which make up a particular scene. This would include all the information related to styling and assets required to create a scene.
+        duration:
+          title: Duration
+          type: number
+          description: Duration of the scene in seconds.
+    DissolveSceneTransition:
+      title: DissolveSceneTransition
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - dissolve
+          type: string
+    PushSceneTransitionParams:
+      title: PushSceneTransitionParams
+      type: object
+      properties:
+        direction:
+          title: Direction
+          enum:
+          - left
+          - right
+          - top
+          - bottom
+          type: string
+          description: Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'.
+        motionBlur:
+          title: Motionblur
+          type: string
+          description: Motion blur effect for the transition. Default is '0px', i.e. no motion blur.
+    PushSceneTransition:
+      title: PushSceneTransition
+      required:
+      - name
+      - params
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - push
+          type: string
+        params:
+          $ref: '#/components/schemas/PushSceneTransitionParams'
+    SlideTransitionParams:
+      title: SlideTransitionParams
+      type: object
+      properties:
+        direction:
+          title: Direction
+          enum:
+          - left
+          - right
+          - top
+          - bottom
+          type: string
+          description: Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'.
+        motionBlur:
+          title: Motionblur
+          type: string
+          description: Motion blur effect for the transition. Default is '0px', i.e. no motion blur.
+    SlideSceneTransition:
+      title: SlideSceneTransition
+      required:
+      - name
+      - params
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - slide
+          type: string
+        params:
+          $ref: '#/components/schemas/SlideTransitionParams'
+    RollSceneTransitionParams:
+      title: RollSceneTransitionParams
+      required:
+      - direction
+      type: object
+      properties:
+        rollAngle:
+          title: Rollangle
+          type: number
+          description: Roll angle for the transition. It is represented as a float. Default is '0', i.e. no roll.
+        motionBlur:
+          title: Motionblur
+          type: string
+          description: Motion blur effect for the transition. Default is '0px', i.e. no motion blur.
+        direction:
+          title: Direction
+          enum:
+          - clockwise
+          - anticlockwise
+          type: string
+          description: Direction of the roll transition. It can be 'clockwise' or 'anticlockwise'.
+    RollSceneTransition:
+      title: RollSceneTransition
+      required:
+      - name
+      - params
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - roll
+          type: string
+        params:
+          $ref: '#/components/schemas/RollSceneTransitionParams'
+    StackSceneTransitionParams:
+      title: StackSceneTransitionParams
+      type: object
+      properties:
+        direction:
+          title: Direction
+          enum:
+          - left
+          - right
+          - top
+          - bottom
+          type: string
+          description: Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'.
+        motionBlur:
+          title: Motionblur
+          type: string
+          description: Motion blur effect for the transition. Default is '0px', i.e. no motion blur.
+    StackSceneTransition:
+      title: StackSceneTransition
+      required:
+      - name
+      - params
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - stack
+          type: string
+        params:
+          $ref: '#/components/schemas/StackSceneTransitionParams'
+    LinearDirectionTransitionParams:
+      title: LinearDirectionTransitionParams
+      type: object
+      properties:
+        direction:
+          title: Direction
+          enum:
+          - left
+          - right
+          - top
+          - bottom
+          type: string
+          description: Direction of the linear transition. It can be 'left', 'right', 'top', or 'bottom'. Default is 'left'.
+    LineWipeSceneTransition:
+      title: LineWipeSceneTransition
+      required:
+      - name
+      - params
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - lineWipe
+          type: string
+        params:
+          $ref: '#/components/schemas/LinearDirectionTransitionParams'
+    CircleWipeTransitionParams:
+      title: CircleWipeTransitionParams
+      required:
+      - direction
+      type: object
+      properties:
+        motionBlur:
+          title: Motionblur
+          type: string
+          description: Motion blur effect for the transition. Default is '0px', i.e. no motion blur.
+        direction:
+          title: Direction
+          enum:
+          - insideOut
+          - outsideIn
+          type: string
+          description: Direction of the circle wipe transition. It can be 'insideOut' or 'outsideIn'.
+    CircleWipeSceneTransition:
+      title: CircleWipeSceneTransition
+      required:
+      - name
+      - params
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - circleWipe
+          type: string
+        params:
+          $ref: '#/components/schemas/CircleWipeTransitionParams'
+    ZoomTransitionParams:
+      title: ZoomTransitionParams
+      required:
+      - direction
+      type: object
+      properties:
+        motionBlur:
+          title: Motionblur
+          type: string
+          description: Motion blur effect for the transition. Default is '0px', i.e. no motion blur.
+        direction:
+          title: Direction
+          enum:
+          - zoomIn
+          - zoomOut
+          type: string
+          description: Direction of the zoom transition. It can be 'zoomIn' or 'zoomOut'.
+    ZoomSceneTransition:
+      title: ZoomSceneTransition
+      required:
+      - name
+      - params
+      type: object
+      properties:
+        name:
+          title: Name
+          enum:
+          - zoom
+          type: string
+        params:
+          $ref: '#/components/schemas/ZoomTransitionParams'
+    SimplifiedFullSceneTransition:
+      title: SimplifiedFullSceneTransition
+      required:
+      - duration
+      - preset
+      - timingFunction
+      type: object
+      properties:
+        duration:
+          title: Duration
+          type: number
+          description: Duration of the full scene transition in seconds.
+        preset:
+          title: Preset
+          anyOf:
+          - $ref: '#/components/schemas/DissolveSceneTransition'
+          - $ref: '#/components/schemas/PushSceneTransition'
+          - $ref: '#/components/schemas/SlideSceneTransition'
+          - $ref: '#/components/schemas/RollSceneTransition'
+          - $ref: '#/components/schemas/StackSceneTransition'
+          - $ref: '#/components/schemas/LineWipeSceneTransition'
+          - $ref: '#/components/schemas/CircleWipeSceneTransition'
+          - $ref: '#/components/schemas/ZoomSceneTransition'
+          description: The type of scene transition.
+        timingFunction:
+          title: Timingfunction
+          allOf:
+          - $ref: '#/components/schemas/TimingFunction'
+          description: Timing function to determine how the transition will progress.
+    SimplifiedSceneTransitionSpec:
+      title: SimplifiedSceneTransitionSpec
+      required:
+      - transition
+      type: object
+      properties:
+        startScene:
+          title: Startscene
+          type: integer
+          description: Starting scene index for the transition. Scenes are indexed from 0.
+        endScene:
+          title: Endscene
+          type: integer
+          description: Ending scene index for the transition. Scenes are indexed from 0.
+        transition:
+          $ref: '#/components/schemas/SimplifiedFullSceneTransition'
+    BackgroundAudioAsset:
+      title: BackgroundAudioAsset
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          title: Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          description: The URL of the audio.
+          format: uri
+    SimplifiedMediaElementProps:
+      title: SimplifiedMediaElementProps
+      required:
+      - volume
+      type: object
+      properties:
+        volume:
+          title: Volume
+          maximum: 1
+          exclusiveMinimum: false
+          type: number
+          description: Volume of the media element. Ranges from 0 to 1.
+    SimplifiedBackgroundMusicElement:
+      title: SimplifiedBackgroundMusicElement
+      required:
+      - asset
+      - mediaElProps
+      type: object
+      properties:
+        style:
+          title: Style
+          type: object
+          description: Style properties for the background music element.
+        asset:
+          $ref: '#/components/schemas/BackgroundAudioAsset'
+        animations:
+          title: Animations
+          type: array
+          items:
+            $ref: '#/components/schemas/SimplifiedAnimation'
+        mediaElProps:
+          $ref: '#/components/schemas/SimplifiedMediaElementProps'
+    SimplifiedCallbackSpecs:
+      title: SimplifiedCallbackSpecs
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          title: Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          description: URL of the callback request.
+          format: uri
+        params:
+          title: Params
+          type: object
+          description: Parameters of the callback request.
+        headers:
+          title: Headers
+          type: object
+          description: Headers of the callback request.
+        body:
+          title: Body
+          type: object
+          description: Body of the callback request.
+    SimplifiedCallbackDetails:
+      title: SimplifiedCallbackDetails
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/SimplifiedCallbackSpecs'
+        failure:
+          $ref: '#/components/schemas/SimplifiedCallbackSpecs'
+    CampaignSettings:
+      title: CampaignSettings
+      type: object
+      properties:
+        videoQuality:
+          title: Videoquality
+          maximum: 20
+          minimum: 1
+          type: integer
+          description: Quality of the video. It is an integer value, with higher value representing better video quality. Default quality is '18'.
+    SimplifiedCreateCampaignRequest:
+      title: SimplifiedCreateCampaignRequest
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+          description: Title of the video.
+          default: Default Video
+        name:
+          title: Name
+          type: string
+          description: Name of the video.
+        thumbnailUrl:
+          title: Thumbnailurl
+          type: string
+          description: Thumbnail URL for the video.
+        videoDimension:
+          title: Videodimension
+          allOf:
+          - $ref: '#/components/schemas/ResolutionOption'
+          default:
+            height: 1080
+            width: 1920
+        scenes:
+          title: Scenes
+          type: array
+          items:
+            $ref: '#/components/schemas/SimplifiedScene'
+          default:
+          - elements:
+            - style:
+                height: 100%
+                position: absolute
+                width: 100%
+                zIndex: 1
+              asset:
+                kind: Image
+                use: Background
+                url: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/panel_defaults/background/image/white.webp
+            - style:
+                zIndex: 2
+                opacity: 1
+                height: 986px
+                width: 1231.130615234375px
+                position: absolute
+                bottom: 0px
+                left: 343.935546875px
+                objectFit: contain
+                transform: rotate(0deg)
+                objectPosition: bottom
+              asset:
+                kind: Spokesperson
+                spokespersonVideo:
+                  voiceId: en-US-JennyMultilingualNeural__002
+                  model: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                  transcript: <speak>Change this template text to add your own</speak>
+                  modelPreset: CU
+                  transcript_type: SSML_LIMITED
+              animations:
+              - offset: 0
+                type: start
+                duration: 0.3
+                timingFunction:
+                  type: elastic
+                presets:
+                - fade_in
+              - offset: 0
+                type: end
+                duration: 0.3
+                timingFunction:
+                  type: elastic
+                presets:
+                - fade_out
+        sceneTransitions:
+          title: Scenetransitions
+          type: array
+          items:
+            $ref: '#/components/schemas/SimplifiedSceneTransitionSpec'
+        backgroundMusic:
+          $ref: '#/components/schemas/SimplifiedBackgroundMusicElement'
+        hardcode_subtitles:
+          title: Hardcode Subtitles
+          type: boolean
+        generate_srt_file:
+          title: Generate Srt File
+          type: boolean
+        callbacks:
+          $ref: '#/components/schemas/SimplifiedCallbackDetails'
+        settings:
+          title: Settings
+          allOf:
+          - $ref: '#/components/schemas/CampaignSettings'
+          default: {}
+    ExportCampaignResponse:
+      title: ExportCampaignResponse
+      required:
+      - details
+      - credits_left
+      type: object
+      properties:
+        details:
+          title: Details
+          type: string
+        credits_left:
+          title: Credits Left
+          anyOf:
+          - type: string
+          - type: number
+    CampaignTemplateStatus:
+      title: CampaignTemplateStatus
+      enum:
+      - not_started
+      - queued
+      - under_process
+      - complete
+      - failed
+      type: string
+      description: An enumeration.
+    VideoGenerationTimeline:
+      title: VideoGenerationTimeline
+      required:
+      - created_at
+      - last_edited_at
+      type: object
+      properties:
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        last_edited_at:
+          title: Last Edited At
+          type: string
+          format: date-time
+        queued_at:
+          title: Queued At
+          type: string
+          format: date-time
+        started_at:
+          title: Started At
+          type: string
+          format: date-time
+        completed_at:
+          title: Completed At
+          type: string
+          format: date-time
+        failed_at:
+          title: Failed At
+          type: string
+          format: date-time
+    ErrorDetails:
+      title: ErrorDetails
+      required:
+      - error_code
+      - error_message
+      type: object
+      properties:
+        error_code:
+          title: Error Code
+          type: integer
+        error_message:
+          title: Error Message
+          type: string
+    GetCampaignResponse:
+      title: GetCampaignResponse
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CampaignTemplateStatus'
+        video_url:
+          title: Video Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        subtitles_url:
+          title: Subtitles Url
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        estimated_start_at:
+          title: Estimated Start At
+          type: string
+          format: date-time
+        estimated_complete_at:
+          title: Estimated Complete At
+          type: string
+          format: date-time
+        timeline:
+          $ref: '#/components/schemas/VideoGenerationTimeline'
+        error_details:
+          $ref: '#/components/schemas/ErrorDetails'
+        callback:
+          title: Callback
+          type: object
+tags:
+- name: Authentication
+  description: ''
+- name: Actor
+  description: ''
+- name: Voice
+  description: ''
+- name: Video
+  description: ''
+x-provenance:
+  method: searched
+  source: https://studio-rephrase-api.readme.io/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://studio-rephrase-api.readme.io/reference/create-video.md
+  - https://studio-rephrase-api.readme.io/reference/export-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-access-token.md
+  - https://studio-rephrase-api.readme.io/reference/get-actors.md
+  - https://studio-rephrase-api.readme.io/reference/get-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-voices.md
+  merge:
+    pages: 6
+    deduped: 0
+    conflicts_kept_first: 0

@@ -1,0 +1,44 @@
+generated: '2026-10-14'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 3
+  own: 2
+  other_domain: 1
+  platform: 0
+  roles:
+  - docs
+  - identity
+  - website
+hosts:
+- host: auth.rephrase.ai
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: rephrase.ai
+  role: identity
+  relation: own
+- host: rephrase.ai
+  found_by:
+  - pointer
+  types:
+  - Website
+  serves: []
+  registrable_domain: rephrase.ai
+  role: website
+  relation: own
+- host: studio-rephrase-api.readme.io
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Documentation
+  - APIReference
+  serves:
+  - docs
+  registrable_domain: readme.io
+  role: docs
+  relation: other-domain

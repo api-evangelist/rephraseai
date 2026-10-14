@@ -1,0 +1,456 @@
+{
+  "@context": {
+    "@vocab": "https://rephrase.ai/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "rephraseai": "https://rephrase.ai/schema#",
+    "AuthRequest": "rephraseai:AuthRequest",
+    "grant_type": {
+      "@id": "rephraseai:grant_type",
+      "@type": "xsd:string"
+    },
+    "client_id": {
+      "@id": "rephraseai:client_id",
+      "@type": "xsd:string"
+    },
+    "scope": {
+      "@id": "rephraseai:scope",
+      "@type": "xsd:string"
+    },
+    "refresh_token": {
+      "@id": "rephraseai:refresh_token",
+      "@type": "xsd:string"
+    },
+    "AuthResponse": "rephraseai:AuthResponse",
+    "access_token": {
+      "@id": "rephraseai:access_token",
+      "@type": "xsd:string"
+    },
+    "expires_in": {
+      "@id": "rephraseai:expires_in",
+      "@type": "xsd:integer"
+    },
+    "token_type": {
+      "@id": "rephraseai:token_type",
+      "@type": "xsd:string"
+    },
+    "Preset": "rephraseai:Preset",
+    "description": {
+      "@id": "rephraseai:description",
+      "@type": "xsd:string"
+    },
+    "thumbnailUrl": {
+      "@id": "rephraseai:thumbnailUrl",
+      "@type": "xsd:string"
+    },
+    "SimplifiedActorVariant": "rephraseai:SimplifiedActorVariant",
+    "id": {
+      "@id": "rephraseai:id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "rephraseai:name",
+      "@type": "xsd:string"
+    },
+    "backgroundUrl": {
+      "@id": "rephraseai:backgroundUrl",
+      "@type": "@id"
+    },
+    "suggestedVoices": {
+      "@id": "rephraseai:suggestedVoices",
+      "@container": "@list"
+    },
+    "presets": {
+      "@id": "rephraseai:presets"
+    },
+    "SimplifiedActor": "rephraseai:SimplifiedActor",
+    "gender": {
+      "@id": "rephraseai:gender",
+      "@type": "xsd:string"
+    },
+    "variants": {
+      "@id": "rephraseai:variants"
+    },
+    "SimplifiedVoice": "rephraseai:SimplifiedVoice",
+    "title": {
+      "@id": "rephraseai:title",
+      "@type": "xsd:string"
+    },
+    "voice_key": {
+      "@id": "rephraseai:voice_key",
+      "@type": "xsd:string"
+    },
+    "language": {
+      "@id": "rephraseai:language",
+      "@type": "xsd:string"
+    },
+    "sample_link": {
+      "@id": "rephraseai:sample_link",
+      "@type": "@id"
+    },
+    "voice_characteristics": {
+      "@id": "rephraseai:voice_characteristics",
+      "@container": "@list"
+    },
+    "use_cases": {
+      "@id": "rephraseai:use_cases",
+      "@container": "@list"
+    },
+    "captions_supported": {
+      "@id": "rephraseai:captions_supported",
+      "@type": "xsd:boolean"
+    },
+    "markers_supported": {
+      "@id": "rephraseai:markers_supported",
+      "@type": "xsd:boolean"
+    },
+    "CreateCampaignResponse": "rephraseai:CreateCampaignResponse",
+    "campaign_id": {
+      "@id": "rephraseai:campaign_id",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "rephraseai:message",
+      "@type": "xsd:string"
+    },
+    "ResolutionOption": "rephraseai:ResolutionOption",
+    "height": {
+      "@id": "rephraseai:height",
+      "@type": "xsd:integer"
+    },
+    "width": {
+      "@id": "rephraseai:width",
+      "@type": "xsd:integer"
+    },
+    "TextAsset": "rephraseai:TextAsset",
+    "kind": {
+      "@id": "rephraseai:kind",
+      "@type": "xsd:string"
+    },
+    "text": {
+      "@id": "rephraseai:text",
+      "@type": "xsd:string"
+    },
+    "textStyle": {
+      "@id": "rephraseai:textStyle"
+    },
+    "ImageAsset": "rephraseai:ImageAsset",
+    "use": {
+      "@id": "rephraseai:use",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "rephraseai:url",
+      "@type": "@id"
+    },
+    "VideoAsset": "rephraseai:VideoAsset",
+    "ShapeAsset": "rephraseai:ShapeAsset",
+    "shapeStyle": {
+      "@id": "rephraseai:shapeStyle"
+    },
+    "TranscriptType": "rephraseai:TranscriptType",
+    "BackgroundOption": "rephraseai:BackgroundOption",
+    "alpha": {
+      "@id": "rephraseai:alpha",
+      "@type": "xsd:decimal"
+    },
+    "VideoOption": "rephraseai:VideoOption",
+    "resolution": {
+      "@id": "rephraseai:resolution",
+      "@type": "@id"
+    },
+    "background": {
+      "@id": "rephraseai:background",
+      "@type": "@id"
+    },
+    "OutputParams": "rephraseai:OutputParams",
+    "video": {
+      "@id": "rephraseai:video",
+      "@type": "@id"
+    },
+    "SpokespersonVideoDetail": "rephraseai:SpokespersonVideoDetail",
+    "voiceId": {
+      "@id": "rephraseai:voiceId",
+      "@type": "xsd:string"
+    },
+    "model": {
+      "@id": "rephraseai:model",
+      "@type": "xsd:string"
+    },
+    "transcript": {
+      "@id": "rephraseai:transcript",
+      "@type": "xsd:string"
+    },
+    "modelPreset": {
+      "@id": "rephraseai:modelPreset",
+      "@type": "xsd:string"
+    },
+    "windowSize": {
+      "@id": "rephraseai:windowSize",
+      "@type": "xsd:string"
+    },
+    "isVoiceOver": {
+      "@id": "rephraseai:isVoiceOver",
+      "@type": "xsd:boolean"
+    },
+    "transcript_type": {
+      "@id": "rephraseai:transcript_type"
+    },
+    "output_params": {
+      "@id": "rephraseai:output_params",
+      "@type": "@id"
+    },
+    "SpokespersonAsset": "rephraseai:SpokespersonAsset",
+    "spokespersonVideo": {
+      "@id": "rephraseai:spokespersonVideo",
+      "@type": "@id"
+    },
+    "AudioAsset": "rephraseai:AudioAsset",
+    "EasingFunction": "rephraseai:EasingFunction",
+    "TimingFunction": "rephraseai:TimingFunction",
+    "type": {
+      "@id": "rephraseai:type"
+    },
+    "params": {
+      "@id": "rephraseai:params",
+      "@container": "@list"
+    },
+    "AnimationPreset": "rephraseai:AnimationPreset",
+    "AnimatableFields": "rephraseai:AnimatableFields",
+    "AnimatableFieldValueRange": "rephraseai:AnimatableFieldValueRange",
+    "startValue": {
+      "@id": "rephraseai:startValue",
+      "@type": "xsd:decimal"
+    },
+    "endValue": {
+      "@id": "rephraseai:endValue",
+      "@type": "xsd:decimal"
+    },
+    "SimplifiedAnimation": "rephraseai:SimplifiedAnimation",
+    "offset": {
+      "@id": "rephraseai:offset",
+      "@type": "xsd:decimal"
+    },
+    "marker_id": {
+      "@id": "rephraseai:marker_id",
+      "@type": "xsd:string"
+    },
+    "duration": {
+      "@id": "rephraseai:duration",
+      "@type": "xsd:decimal"
+    },
+    "timingFunction": {
+      "@id": "rephraseai:timingFunction"
+    },
+    "fields": {
+      "@id": "rephraseai:fields",
+      "@container": "@list"
+    },
+    "SimplifiedElement": "rephraseai:SimplifiedElement",
+    "style": {
+      "@id": "rephraseai:style"
+    },
+    "asset": {
+      "@id": "rephraseai:asset"
+    },
+    "animations": {
+      "@id": "rephraseai:animations",
+      "@container": "@list"
+    },
+    "SimplifiedScene": "rephraseai:SimplifiedScene",
+    "elements": {
+      "@id": "rephraseai:elements",
+      "@container": "@list"
+    },
+    "DissolveSceneTransition": "rephraseai:DissolveSceneTransition",
+    "PushSceneTransitionParams": "rephraseai:PushSceneTransitionParams",
+    "direction": {
+      "@id": "rephraseai:direction",
+      "@type": "xsd:string"
+    },
+    "motionBlur": {
+      "@id": "rephraseai:motionBlur",
+      "@type": "xsd:string"
+    },
+    "PushSceneTransition": "rephraseai:PushSceneTransition",
+    "SlideTransitionParams": "rephraseai:SlideTransitionParams",
+    "SlideSceneTransition": "rephraseai:SlideSceneTransition",
+    "RollSceneTransitionParams": "rephraseai:RollSceneTransitionParams",
+    "rollAngle": {
+      "@id": "rephraseai:rollAngle",
+      "@type": "xsd:decimal"
+    },
+    "RollSceneTransition": "rephraseai:RollSceneTransition",
+    "StackSceneTransitionParams": "rephraseai:StackSceneTransitionParams",
+    "StackSceneTransition": "rephraseai:StackSceneTransition",
+    "LinearDirectionTransitionParams": "rephraseai:LinearDirectionTransitionParams",
+    "LineWipeSceneTransition": "rephraseai:LineWipeSceneTransition",
+    "CircleWipeTransitionParams": "rephraseai:CircleWipeTransitionParams",
+    "CircleWipeSceneTransition": "rephraseai:CircleWipeSceneTransition",
+    "ZoomTransitionParams": "rephraseai:ZoomTransitionParams",
+    "ZoomSceneTransition": "rephraseai:ZoomSceneTransition",
+    "SimplifiedFullSceneTransition": "rephraseai:SimplifiedFullSceneTransition",
+    "preset": {
+      "@id": "rephraseai:preset"
+    },
+    "SimplifiedSceneTransitionSpec": "rephraseai:SimplifiedSceneTransitionSpec",
+    "startScene": {
+      "@id": "rephraseai:startScene",
+      "@type": "xsd:integer"
+    },
+    "endScene": {
+      "@id": "rephraseai:endScene",
+      "@type": "xsd:integer"
+    },
+    "transition": {
+      "@id": "rephraseai:transition",
+      "@type": "@id"
+    },
+    "BackgroundAudioAsset": "rephraseai:BackgroundAudioAsset",
+    "SimplifiedMediaElementProps": "rephraseai:SimplifiedMediaElementProps",
+    "volume": {
+      "@id": "rephraseai:volume",
+      "@type": "xsd:decimal"
+    },
+    "SimplifiedBackgroundMusicElement": "rephraseai:SimplifiedBackgroundMusicElement",
+    "mediaElProps": {
+      "@id": "rephraseai:mediaElProps",
+      "@type": "@id"
+    },
+    "SimplifiedCallbackSpecs": "rephraseai:SimplifiedCallbackSpecs",
+    "headers": {
+      "@id": "rephraseai:headers"
+    },
+    "body": {
+      "@id": "rephraseai:body"
+    },
+    "SimplifiedCallbackDetails": "rephraseai:SimplifiedCallbackDetails",
+    "success": {
+      "@id": "rephraseai:success",
+      "@type": "@id"
+    },
+    "failure": {
+      "@id": "rephraseai:failure",
+      "@type": "@id"
+    },
+    "CampaignSettings": "rephraseai:CampaignSettings",
+    "videoQuality": {
+      "@id": "rephraseai:videoQuality",
+      "@type": "xsd:integer"
+    },
+    "SimplifiedCreateCampaignRequest": "rephraseai:SimplifiedCreateCampaignRequest",
+    "videoDimension": {
+      "@id": "rephraseai:videoDimension"
+    },
+    "scenes": {
+      "@id": "rephraseai:scenes",
+      "@container": "@list"
+    },
+    "sceneTransitions": {
+      "@id": "rephraseai:sceneTransitions",
+      "@container": "@list"
+    },
+    "backgroundMusic": {
+      "@id": "rephraseai:backgroundMusic",
+      "@type": "@id"
+    },
+    "hardcode_subtitles": {
+      "@id": "rephraseai:hardcode_subtitles",
+      "@type": "xsd:boolean"
+    },
+    "generate_srt_file": {
+      "@id": "rephraseai:generate_srt_file",
+      "@type": "xsd:boolean"
+    },
+    "callbacks": {
+      "@id": "rephraseai:callbacks",
+      "@type": "@id"
+    },
+    "settings": {
+      "@id": "rephraseai:settings"
+    },
+    "ExportCampaignResponse": "rephraseai:ExportCampaignResponse",
+    "details": {
+      "@id": "rephraseai:details",
+      "@type": "xsd:string"
+    },
+    "credits_left": {
+      "@id": "rephraseai:credits_left"
+    },
+    "CampaignTemplateStatus": "rephraseai:CampaignTemplateStatus",
+    "VideoGenerationTimeline": "rephraseai:VideoGenerationTimeline",
+    "created_at": {
+      "@id": "rephraseai:created_at",
+      "@type": "xsd:dateTime"
+    },
+    "last_edited_at": {
+      "@id": "rephraseai:last_edited_at",
+      "@type": "xsd:dateTime"
+    },
+    "queued_at": {
+      "@id": "rephraseai:queued_at",
+      "@type": "xsd:dateTime"
+    },
+    "started_at": {
+      "@id": "rephraseai:started_at",
+      "@type": "xsd:dateTime"
+    },
+    "completed_at": {
+      "@id": "rephraseai:completed_at",
+      "@type": "xsd:dateTime"
+    },
+    "failed_at": {
+      "@id": "rephraseai:failed_at",
+      "@type": "xsd:dateTime"
+    },
+    "ErrorDetails": "rephraseai:ErrorDetails",
+    "error_code": {
+      "@id": "rephraseai:error_code",
+      "@type": "xsd:integer"
+    },
+    "error_message": {
+      "@id": "rephraseai:error_message",
+      "@type": "xsd:string"
+    },
+    "GetCampaignResponse": "rephraseai:GetCampaignResponse",
+    "status": {
+      "@id": "rephraseai:status",
+      "@type": "@id"
+    },
+    "video_url": {
+      "@id": "rephraseai:video_url",
+      "@type": "@id"
+    },
+    "subtitles_url": {
+      "@id": "rephraseai:subtitles_url",
+      "@type": "@id"
+    },
+    "estimated_start_at": {
+      "@id": "rephraseai:estimated_start_at",
+      "@type": "xsd:dateTime"
+    },
+    "estimated_complete_at": {
+      "@id": "rephraseai:estimated_complete_at",
+      "@type": "xsd:dateTime"
+    },
+    "timeline": {
+      "@id": "rephraseai:timeline",
+      "@type": "@id"
+    },
+    "error_details": {
+      "@id": "rephraseai:error_details",
+      "@type": "@id"
+    },
+    "callback": {
+      "@id": "rephraseai:callback"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Rephrase.ai API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Rephrase.ai's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/rephraseai-rephrase-studio-api-openapi.yml.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/rephraseai-rephrase-studio-api-openapi.yml"
+  ]
+}
