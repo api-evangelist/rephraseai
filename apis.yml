@@ -127,22 +127,16 @@ common:
   url: well-known/rephraseai-well-known.yml
 
 apis:
-- name: Rephrase Studio API
-  description: OAuth2 text-to-video generation API — list supported actors and voices, create and export videos of speaking digital avatars, and
-    poll video status. Legacy surface; company acquired by Adobe (Nov 2023).
+- aid: rephraseai:rephraseai-actor-api
+  name: Rephrase.ai Actor API
+  description: The Actor API from Rephrase.ai — 1 operation(s) for actor.
   humanURL: https://studio-rephrase-api.readme.io/reference/documentation
   baseURL: https://auth.rephrase.ai
   tags:
-  - Video
-  - Generative AI
-  - Text-to-Video
-  tags_raw:
-  - Video
-  - Generative AI
-  - Text to Video
+  - Actor
   properties:
-  - url: openapi/rephraseai-rephrase-studio-api-openapi.yml
-    type: OpenAPI
+  - type: OpenAPI
+    url: openapi/rephraseai-actor-api-openapi.yml
   - type: Documentation
     url: https://studio-rephrase-api.readme.io/reference/documentation
   - type: APIReference
@@ -155,9 +149,6 @@ apis:
     url: conventions/rephraseai-conventions.yml
   - type: X-MCPServerCandidate
     url: mcp/rephraseai-mcp.yml
-    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
-      API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
-      the artifact-type surfaces with a server that does not exist.'
   - type: JSONSchema
     url: json-schema/rephraseai-simplified-create-campaign-request-schema.json
   - type: JSONSchema
@@ -170,8 +161,108 @@ apis:
     url: json-schema/rephraseai-export-campaign-response-schema.json
   - type: JSONSchema
     url: json-schema/rephraseai-create-campaign-response-schema.json
-  aid: rephraseai:rephrase-studio-api
-
+- aid: rephraseai:rephraseai-authentication-api
+  name: Rephrase.ai Authentication API
+  description: The Authentication API from Rephrase.ai — 1 operation(s) for authentication.
+  humanURL: https://studio-rephrase-api.readme.io/reference/documentation
+  baseURL: https://auth.rephrase.ai
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/rephraseai-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: APIReference
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: Authentication
+    url: authentication/rephraseai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/rephraseai-scopes.yml
+  - type: Conventions
+    url: conventions/rephraseai-conventions.yml
+  - type: X-MCPServerCandidate
+    url: mcp/rephraseai-mcp.yml
+  - type: JSONSchema
+    url: json-schema/rephraseai-simplified-create-campaign-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-get-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-export-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-create-campaign-response-schema.json
+- aid: rephraseai:rephraseai-video-api
+  name: Rephrase.ai Video API
+  description: The Video API from Rephrase.ai — 3 operation(s) for video.
+  humanURL: https://studio-rephrase-api.readme.io/reference/documentation
+  baseURL: https://auth.rephrase.ai
+  tags:
+  - Video
+  properties:
+  - type: OpenAPI
+    url: openapi/rephraseai-video-api-openapi.yml
+  - type: Documentation
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: APIReference
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: Authentication
+    url: authentication/rephraseai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/rephraseai-scopes.yml
+  - type: Conventions
+    url: conventions/rephraseai-conventions.yml
+  - type: X-MCPServerCandidate
+    url: mcp/rephraseai-mcp.yml
+  - type: JSONSchema
+    url: json-schema/rephraseai-simplified-create-campaign-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-get-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-export-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-create-campaign-response-schema.json
+- aid: rephraseai:rephraseai-voice-api
+  name: Rephrase.ai Voice API
+  description: The Voice API from Rephrase.ai — 1 operation(s) for voice.
+  humanURL: https://studio-rephrase-api.readme.io/reference/documentation
+  baseURL: https://auth.rephrase.ai
+  tags:
+  - Voice
+  properties:
+  - type: OpenAPI
+    url: openapi/rephraseai-voice-api-openapi.yml
+  - type: Documentation
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: APIReference
+    url: https://studio-rephrase-api.readme.io/reference/documentation
+  - type: Authentication
+    url: authentication/rephraseai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/rephraseai-scopes.yml
+  - type: Conventions
+    url: conventions/rephraseai-conventions.yml
+  - type: X-MCPServerCandidate
+    url: mcp/rephraseai-mcp.yml
+  - type: JSONSchema
+    url: json-schema/rephraseai-simplified-create-campaign-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-get-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-auth-request-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-export-campaign-response-schema.json
+  - type: JSONSchema
+    url: json-schema/rephraseai-create-campaign-response-schema.json
 x-enrichment:
   date: '2026-07-20'
   status: enriched

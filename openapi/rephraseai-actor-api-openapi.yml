@@ -1,0 +1,153 @@
+openapi: 3.2.0
+info:
+  title: Rephrase Studio Actor API
+  version: v2
+servers:
+- url: /
+tags:
+- name: Actor
+  description: ''
+paths:
+  /personalized-brand.api.rephrase.ai/v2/actors:
+    get:
+      tags:
+      - Actor
+      summary: Get all supported actors
+      description: This API returns list of all supported actors
+      operationId: get-actors
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorize the request using your access token.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: Bearer <access_token>
+      requestBody:
+        content:
+          application/json: {}
+        required: false
+      responses:
+        '200':
+          description: Response is a mapping of actor ids and corresponding actor properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimplifiedActorDict'
+              example:
+                brianna:
+                  gender: female
+                  variants:
+                    c1c1c529-28a3-51ce-b028-140c1c79a3ad:
+                      id: c1c1c529-28a3-51ce-b028-140c1c79a3ad
+                      name: Brianna Hill
+                      thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/c1c1c529-28a3-51ce-b028-140c1c79a3ad___c1c1c529-28a3-51ce-b028-140c1c79a3ad___ms_update.webp
+                      backgroundUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/white_bg.png
+                      suggestedVoices:
+                      - AVA_M__004
+                      - en-IN-NeerjaNeural__002
+                      presets:
+                        MS:
+                          description: Medium Shot
+                          thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/c1c1c529-28a3-51ce-b028-140c1c79a3ad___c1c1c529-28a3-51ce-b028-140c1c79a3ad___ms_update.webp
+                    2274460d-a8a4-5f6c-9f32-02dceb029c58:
+                      id: 2274460d-a8a4-5f6c-9f32-02dceb029c58
+                      name: Brianna Hill
+                      thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/2274460d-a8a4-5f6c-9f32-02dceb029c58___2274460d-a8a4-5f6c-9f32-02dceb029c58.webp
+                      backgroundUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/media/white_bg.png
+                      suggestedVoices:
+                      - AVA_M__004
+                      - en-IN-NeerjaNeural__002
+                      presets:
+                        MS:
+                          description: Medium Shot
+                          thumbnailUrl: https://rephrase-assets.s3.ap-south-1.amazonaws.com/actor_thumbnail/2274460d-a8a4-5f6c-9f32-02dceb029c58___2274460d-a8a4-5f6c-9f32-02dceb029c58___ms_update.webp
+      deprecated: false
+components:
+  schemas:
+    SimplifiedActor:
+      title: SimplifiedActor
+      required:
+      - gender
+      - variants
+      type: object
+      properties:
+        gender:
+          title: Gender
+          type: string
+        variants:
+          title: Variants
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SimplifiedActorVariant'
+    Preset:
+      title: Preset
+      type: object
+      properties:
+        description:
+          title: Description
+          type: string
+        thumbnailUrl:
+          title: Thumbnailurl
+          type: string
+    SimplifiedActorDict:
+      title: SimplifiedActorDict
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SimplifiedActor'
+    SimplifiedActorVariant:
+      title: SimplifiedActorVariant
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        thumbnailUrl:
+          title: Thumbnailurl
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        backgroundUrl:
+          title: Backgroundurl
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        suggestedVoices:
+          title: Suggestedvoices
+          type: array
+          items: {}
+        presets:
+          title: Presets
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Preset'
+          description: Presets is a mapping of preset id and corresponding preset properties.
+x-provenance:
+  method: searched
+  source: https://studio-rephrase-api.readme.io/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://studio-rephrase-api.readme.io/reference/create-video.md
+  - https://studio-rephrase-api.readme.io/reference/export-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-access-token.md
+  - https://studio-rephrase-api.readme.io/reference/get-actors.md
+  - https://studio-rephrase-api.readme.io/reference/get-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-voices.md
+  merge:
+    pages: 6
+    deduped: 0
+    conflicts_kept_first: 0

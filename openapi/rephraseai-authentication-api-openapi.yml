@@ -1,0 +1,99 @@
+openapi: 3.2.0
+info:
+  title: Rephrase Studio Authentication API
+  version: v2
+servers:
+- url: /
+tags:
+- name: Authentication
+  description: ''
+paths:
+  /auth.rephrase.ai/oauth/token:
+    post:
+      tags:
+      - Authentication
+      summary: Get Access Token
+      description: 'Contact us at help@rephrase.ai for your Client ID and Refresh Token.
+
+
+        1. You can use your Client ID and Refresh Token to generate an Access Token.
+
+        2. Access Tokens generated are valid for 24 hours.
+
+        3. For usage of any other API calls, your request header needs `Authorization: Bearer `'
+      operationId: get-access-token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+        required: false
+      responses:
+        '200':
+          description: Authentication Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+      deprecated: false
+      servers:
+      - url: https://auth.rephrase.ai
+components:
+  schemas:
+    AuthRequest:
+      title: AuthRequest
+      type: object
+      properties:
+        grant_type:
+          title: Grant Type
+          type: string
+          default: refresh_token
+        client_id:
+          title: Client Id
+          type: string
+          default: <client_id>
+        scope:
+          title: Scope
+          type: string
+          default: all:diy
+        refresh_token:
+          title: Refresh Token
+          type: string
+          default: <refresh_token>
+    AuthResponse:
+      title: AuthResponse
+      type: object
+      properties:
+        access_token:
+          title: Access Token
+          type: string
+          default: <access_token>
+        scope:
+          title: Scope
+          type: string
+          default: read:rephrase.ai read:rephrase.ai offline_access
+        expires_in:
+          title: Expires In
+          type: integer
+          default: 86400
+        token_type:
+          title: Token Type
+          type: string
+          default: Bearer
+x-provenance:
+  method: searched
+  source: https://studio-rephrase-api.readme.io/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://studio-rephrase-api.readme.io/reference/create-video.md
+  - https://studio-rephrase-api.readme.io/reference/export-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-access-token.md
+  - https://studio-rephrase-api.readme.io/reference/get-actors.md
+  - https://studio-rephrase-api.readme.io/reference/get-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-voices.md
+  merge:
+    pages: 6
+    deduped: 0
+    conflicts_kept_first: 0

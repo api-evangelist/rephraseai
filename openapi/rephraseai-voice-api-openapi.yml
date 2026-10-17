@@ -1,0 +1,122 @@
+openapi: 3.2.0
+info:
+  title: Rephrase Studio Voice API
+  version: v2
+servers:
+- url: /
+tags:
+- name: Voice
+  description: ''
+paths:
+  /personalized-brand.api.rephrase.ai/v2/voices:
+    get:
+      tags:
+      - Voice
+      summary: Get all supported voices
+      description: This API returns list of all supported voices
+      operationId: get-voices
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorize the request using your access token.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        explode: false
+        allowReserved: false
+        schema:
+          type: string
+          default: Bearer <access_token>
+      requestBody:
+        content:
+          application/json: {}
+        required: false
+      responses:
+        '200':
+          description: Response is a mapping of voice ids and corresponding voice properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimplifiedVoiceDict'
+              example:
+                en-US-JennyMultilingualNeural__002:
+                  voice_key: en-US-JennyMultilingualNeural__002
+                  language: en-US
+                  gender: female
+                  title: Jenny Multilingual
+                  voice_characteristics:
+                  - age: Young Adult
+                    tone: General
+                    speed: Normal
+                  use_cases: []
+                  captions_supported: true
+                  markers_supported: true
+                  sample_link: https://hosted-rephraseai-videos.s3.us-east-1.amazonaws.com/audio/2022f83f-9667-4a46-ba65-3ecf19bb3c85.wav
+      deprecated: false
+components:
+  schemas:
+    SimplifiedVoiceDict:
+      title: SimplifiedVoiceDict
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SimplifiedVoice'
+    SimplifiedVoice:
+      title: SimplifiedVoice
+      required:
+      - title
+      - voice_key
+      - gender
+      - language
+      - captions_supported
+      - markers_supported
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+        voice_key:
+          title: Voice Key
+          type: string
+        gender:
+          title: Gender
+          type: string
+        language:
+          title: Language
+          type: string
+        sample_link:
+          title: Sample Link
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        voice_characteristics:
+          title: Voice Characteristics
+          type: array
+          items: {}
+        use_cases:
+          title: Use Cases
+          type: array
+          items: {}
+        captions_supported:
+          title: Captions Supported
+          type: boolean
+        markers_supported:
+          title: Markers Supported
+          type: boolean
+x-provenance:
+  method: searched
+  source: https://studio-rephrase-api.readme.io/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://studio-rephrase-api.readme.io/reference/create-video.md
+  - https://studio-rephrase-api.readme.io/reference/export-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-access-token.md
+  - https://studio-rephrase-api.readme.io/reference/get-actors.md
+  - https://studio-rephrase-api.readme.io/reference/get-video.md
+  - https://studio-rephrase-api.readme.io/reference/get-voices.md
+  merge:
+    pages: 6
+    deduped: 0
+    conflicts_kept_first: 0
